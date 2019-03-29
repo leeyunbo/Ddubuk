@@ -33,7 +33,9 @@
 
         public void LoadARMessages(GameObject messageObject)
         {
+           
             StartCoroutine(LoadARMessagesRoutine(messageObject));
+        
         }
 
         IEnumerator LoadARMessagesRoutine(GameObject messageObject)
@@ -41,27 +43,39 @@
             
             yield return new WaitForSeconds(2f);
 
+            /*foreach(GameObject messageObject in messageObjectList)
+            {
                 Message thisMessage = messageObject.GetComponent<Message>();
-
-                Vector3 _targetPosition = _map.Root.TransformPoint(Conversions.GeoToWorldPosition(thisMessage.latitude, thisMessage.longitude, _map.CenterMercator, _map.WorldRelativeScale).ToVector3xz());
-
-                Debug.Log("~~~~TARGET POSITION: " + _targetPosition);
-
+                Vector3 _targetPosition = Conversions.GeoToWorldPosition(thisMessage.latitude, thisMessage.longitude, _map.CenterMercator, _map.WorldRelativeScale).ToVector3xz();
+                messageObject.transform.position = _targetPosition;
+                currentMessages.Add(messageObject);         
+            }*/
+            
+                Message thisMessage = messageObject.GetComponent<Message>();               
+                Vector3 _targetPosition = Conversions.GeoToWorldPosition(thisMessage.latitude, thisMessage.longitude, _map.CenterMercator, _map.WorldRelativeScale).ToVector3xz();
+       
+                
+ 
                 messageObject.transform.position = _targetPosition;
                 
             //add to list so we can update positions later
                 currentMessages = messageObject;
-                Quaternion rotation = Quaternion.Euler(0, 0, 0);
-                var MessagesObject = Instantiate(currentMessages, _targetPosition, rotation); //오브젝트를 원하는 위치에 생성
+             
         }
 
-        public void UpdateARMessageLocations(Vector2d currentLocation)
+        /*public void UpdateARMessageLocations(Vector2d currentLocation)
         {
-            Message message = currentMessages.GetComponent<Message>();
-            Vector3 _targetPosition = _map.Root.TransformPoint(Conversions.GeoToWorldPosition(message.latitude, message.longitude, _map.CenterMercator, _map.WorldRelativeScale).ToVector3xz());
-            currentMessages.transform.position = _targetPosition;
+            if (currentMessages.Count > 0)
+            {
+                foreach (GameObject messageObject in currentMessages)
+                {
+                    Message message = messageObject.GetComponent<Message>();
+                    Vector3 _targetPosition = Conversions.GeoToWorldPosition(message.latitude, message.longitude, _map.CenterMercator, _map.WorldRelativeScale).ToVector3xz();
+                    messageObject.transform.position = _targetPosition;
+                }
+            }
        
         }
-
+*/
     }
 }

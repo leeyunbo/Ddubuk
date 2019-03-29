@@ -806,7 +806,7 @@ namespace Mapbox.Unity.Map
 		/// <param name="queryHeight">If set to <c>true</c> will return the terrain height(in Unity units) at that point.</param>
 		public virtual Vector3 GeoToWorldPosition(Vector2d latitudeLongitude, bool queryHeight = true)
 		{
-			Vector3 worldPos = GeoToWorldPositionXZ(latitudeLongitude);
+            /*Vector3 worldPos = GeoToWorldPositionXZ(latitudeLongitude);
 
 			if (queryHeight)
 			{
@@ -830,8 +830,25 @@ namespace Mapbox.Unity.Map
 				}
 			}
 
-			return worldPos;
-		}
+			return worldPos; */
+            if (queryHeight)
+            {
+                // GeoToWorldPositionXZ without applying Root.TransformPoint
+                var scaleFactor = Mathf.Pow(2, (InitialZoom - AbsoluteZoom));
+                var localPos = Conversions.GeoToWorldPosition(latitudeLongitude, CenterMercator, WorldRelativeScale * scaleFactor).ToVector3xz();
+
+                // Query Height in local space
+                float tileScale = 1f;
+                localPos.y = QueryElevationAtInternal(latitudeLongitude, out tileScale);
+
+                // Now apply Root.TransformPoint
+                return Root.TransformPoint(localPos);
+            }
+            else
+            {
+                return GeoToWorldPositionXZ(latitudeLongitude);
+            }
+        }
 
 		/// <summary>
 		/// Converts a position in map space into a laitude longitude.

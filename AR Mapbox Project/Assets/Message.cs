@@ -7,45 +7,53 @@ namespace Mapbox.Unity.Ar
 
     public class Message : MonoBehaviour
     {
+        private static Message _instance;
+        public static Message Instance { get { return _instance; } }
+
         [HideInInspector]
         public double latitude;
         [HideInInspector]
         public double longitude;
         [HideInInspector]
-        public string text;
-        [HideInInspector]
         bool gpsInit = false;
         LocationInfo currentGPSPosition;
-        int gps_connect = 0;
-        double detailed_num = 1.0;
-        public Text text_latitude;
-        public Text text_longitude;
-        public Transform mapRootTransform;
+       
+   
         public GameObject messagePrefabAR;
+        Camera arCamera;
+        List<GameObject> ObjectsList = new List<GameObject>();
 
-        public TextMesh messageText;
-
-        public void SetText(string text)
+        public void LoadAllMessages()
         {
-            //TODO: here we would need to size the text and 
-            //mesage bubble according to the length of text.
-            //right now this only replaces spaces with a new 
-            //line character
-            string newText = text.Replace(" ", "\n");
-            messageText.text = newText;
+            /*GameObject MessageBubble = Instantiate(messagePrefabAR); //오브젝트 생성
+            Message message = MessageBubble.GetComponent<Message>(); // MessageBubble의 컴포넌트를 메시지 객체가 컨트롤 할 수 있게
+            message.latitude = lat; // gps 지정
+            message.longitude = lon; // 동일 
+            ObjectsList.Add(MessageBubble); //오브젝트 리스트에 현재 오브젝트 저장
+            ARMessageProvider.Instance.LoadARMessages(ObjectsList);*/  
         }
-        void Start()
+        /*IEnumerator GpsRoutine()
         {
-            GameObject MessageBubble = Instantiate(messagePrefabAR, mapRootTransform);
-            Message message = MessageBubble.GetComponent<Message>();
-            //set the camera in the text's Canvas component, I needed to add this
-            //so the layer of the text always shows up over the message sprite.
-            
-            messageText.GetComponent<Canvas>().worldCamera = Camera.main;
+            yield return new WaitForSeconds(15f);
             double lat = ARMessageProvider.Instance.deviceLocation.CurrentLocation.LatitudeLongitude.x;
             double lon = ARMessageProvider.Instance.deviceLocation.CurrentLocation.LatitudeLongitude.y;
+            LoadAllMessages(lat, lon);
+        }*/
+        void Start()
+        {
+            arCamera = Camera.main;
+            GameObject MessageBubble = Instantiate(messagePrefabAR);
+            Message message = MessageBubble.GetComponent<Message>();
+
+            //StartCoroutine(GpsRoutine());
+
+            double lat = ARMessageProvider.Instance.deviceLocation.CurrentLocation.LatitudeLongitude.x;
+            double lon = ARMessageProvider.Instance.deviceLocation.CurrentLocation.LatitudeLongitude.y;
+  
             message.latitude = lat;
             message.longitude = lon;
+            //LoadAllMessages(lat, lon);
+           
             ARMessageProvider.Instance.LoadARMessages(MessageBubble);
         }
 
