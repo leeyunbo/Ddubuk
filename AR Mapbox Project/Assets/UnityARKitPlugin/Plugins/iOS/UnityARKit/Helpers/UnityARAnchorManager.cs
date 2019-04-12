@@ -50,13 +50,6 @@ namespace UnityEngine.XR.iOS
 			}
 		}
 
-        public void UnsubscribeEvents()
-        {
-            UnityARSessionNativeInterface.ARAnchorAddedEvent -= AddAnchor;
-            UnityARSessionNativeInterface.ARAnchorUpdatedEvent -= UpdateAnchor;
-            UnityARSessionNativeInterface.ARAnchorRemovedEvent -= RemoveAnchor;
-        }
-
         public void Destroy()
         {
             foreach (ARPlaneAnchorGameObject arpag in GetCurrentPlaneAnchors()) {
@@ -64,7 +57,6 @@ namespace UnityEngine.XR.iOS
             }
 
             planeAnchorMap.Clear ();
-            UnsubscribeEvents();
         }
 
 		public List<ARPlaneAnchorGameObject> GetCurrentPlaneAnchors()

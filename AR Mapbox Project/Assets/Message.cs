@@ -23,44 +23,35 @@ namespace Mapbox.Unity.Ar
         Camera arCamera;
         List<GameObject> ObjectsList = new List<GameObject>();
 
-        public void LoadAllMessages()
+        public void LoadAllMessages(double lat, double lon)
         {
-            /*GameObject MessageBubble = Instantiate(messagePrefabAR); //오브젝트 생성
+            GameObject MessageBubble = Instantiate(messagePrefabAR); //오브젝트 생성
             Message message = MessageBubble.GetComponent<Message>(); // MessageBubble의 컴포넌트를 메시지 객체가 컨트롤 할 수 있게
             message.latitude = lat; // gps 지정
             message.longitude = lon; // 동일 
             ObjectsList.Add(MessageBubble); //오브젝트 리스트에 현재 오브젝트 저장
-            ARMessageProvider.Instance.LoadARMessages(ObjectsList);*/  
+            ARMessageProvider.Instance.LoadARMessages(ObjectsList);
         }
-        /*IEnumerator GpsRoutine()
-        {
-            yield return new WaitForSeconds(15f);
-            double lat = ARMessageProvider.Instance.deviceLocation.CurrentLocation.LatitudeLongitude.x;
-            double lon = ARMessageProvider.Instance.deviceLocation.CurrentLocation.LatitudeLongitude.y;
-            LoadAllMessages(lat, lon);
-        }*/
+        
         void Start()
         {
             arCamera = Camera.main;
-            GameObject MessageBubble = Instantiate(messagePrefabAR);
-            Message message = MessageBubble.GetComponent<Message>();
-
-            //StartCoroutine(GpsRoutine());
-
-            double lat = ARMessageProvider.Instance.deviceLocation.CurrentLocation.LatitudeLongitude.x;
-            double lon = ARMessageProvider.Instance.deviceLocation.CurrentLocation.LatitudeLongitude.y;
-  
-            message.latitude = lat;
-            message.longitude = lon;
-            //LoadAllMessages(lat, lon);
-           
-            ARMessageProvider.Instance.LoadARMessages(MessageBubble);
+            
         }
 
         void Update()
         {
             //make sure the bubble is always facing the camera
             transform.LookAt(Camera.main.transform);
+            double lat = ARMessageProvider.Instance.deviceLocation.CurrentLocation.LatitudeLongitude.x;
+            double lon = ARMessageProvider.Instance.deviceLocation.CurrentLocation.LatitudeLongitude.y;
+
+        }
+
+        IEnumerator DelayLoadMessageRoutine(double lat, double lon)
+        {
+            yield return new WaitForSeconds(15f);
+            LoadAllMessages(lat, lon);
         }
     }
 }

@@ -15,7 +15,7 @@
         private AbstractMap _map;
 
         [HideInInspector]
-        GameObject currentMessages;
+        List<GameObject> currentMessages = new List<GameObject>();
 
         [HideInInspector]
         public bool deviceAuthenticated = false;
@@ -31,39 +31,34 @@
         }
 
 
-        public void LoadARMessages(GameObject messageObject)
+        public void LoadARMessages(List<GameObject> ObjectsList)
         {
            
-            StartCoroutine(LoadARMessagesRoutine(messageObject));
+            StartCoroutine(LoadARMessagesRoutine(ObjectsList));
         
         }
 
-        IEnumerator LoadARMessagesRoutine(GameObject messageObject)
+        IEnumerator LoadARMessagesRoutine(List<GameObject> messageObjectList)
         { //이미 존재하는 게임오브젝트에 대한 정보를 가져온다.
             
             yield return new WaitForSeconds(2f);
 
-            /*foreach(GameObject messageObject in messageObjectList)
+            foreach(GameObject messageObject in messageObjectList)
             {
                 Message thisMessage = messageObject.GetComponent<Message>();
                 Vector3 _targetPosition = Conversions.GeoToWorldPosition(thisMessage.latitude, thisMessage.longitude, _map.CenterMercator, _map.WorldRelativeScale).ToVector3xz();
                 messageObject.transform.position = _targetPosition;
                 currentMessages.Add(messageObject);         
-            }*/
-            
-                Message thisMessage = messageObject.GetComponent<Message>();               
-                Vector3 _targetPosition = Conversions.GeoToWorldPosition(thisMessage.latitude, thisMessage.longitude, _map.CenterMercator, _map.WorldRelativeScale).ToVector3xz();
-       
-                
- 
-                messageObject.transform.position = _targetPosition;
-                
+            }
+
+
+
             //add to list so we can update positions later
-                currentMessages = messageObject;
+         
              
         }
 
-        /*public void UpdateARMessageLocations(Vector2d currentLocation)
+        public void UpdateARMessageLocations(Vector2d currentLocation)
         {
             if (currentMessages.Count > 0)
             {
@@ -76,6 +71,6 @@
             }
        
         }
-*/
+
     }
 }
