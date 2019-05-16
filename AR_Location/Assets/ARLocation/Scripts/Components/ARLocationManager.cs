@@ -163,7 +163,7 @@ public class ARLocationManager : Singleton<ARLocationManager>
             return;
         }
 
-        // Add the initially set objects, ¿©±â¼­ DB¿§
+        // Add the initially set objects
         foreach (var entry in objects)
         {
             Add(entry);

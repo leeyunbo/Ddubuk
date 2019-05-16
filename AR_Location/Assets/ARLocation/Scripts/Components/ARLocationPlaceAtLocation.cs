@@ -1,95 +1,151 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-/// <summary>
-/// Apply to a GameObject to place it at a specified geographic location.
-/// </summary>
-public class ARLocationPlaceAtLocation : MonoBehaviour {
-    /// <summary>
-    /// The location to place the GameObject at.
-    /// </summary>
-    [Tooltip("The location to place the GameObject at.")]
-    public Location location;
-
-    /// <summary>
-    /// If true, the altitude will be computed as relative to the device level.
-    /// </summary>
-    [Tooltip("If true, the altitude will be computed as relative to the device level.")]
-    public bool isHeightRelative = true;
+using UnityEngine.UI;
+using Firebase;
+using Firebase.Database;
+using Firebase.Unity.Editor;
+using System;
+using Gps;
+using System.Threading;
+namespace Gps
+{
 
     /// <summary>
-    /// If true, will display a UI panel with debug information above the object.
+    /// Apply to a GameObject to place it at a specified geographic location.
     /// </summary>
-    [Tooltip("If true, will display a UI panel with debug information above the object.")]
-    public bool showDebugInfoPanel = false;
-
-    /// <summary>
-    /// The smoothing factor for movement due to GPS location adjustments; if set to zero it is disabled.
-    /// </summary>
-    [Tooltip("The smoothing factor for movement due to GPS location adjustments; if set to zero it is disabled."), Range(0, 500)]
-    public float movementSmoothingFactor = 250.0f;
-
-    [System.NonSerialized, HideInInspector]
-    public ARLocationManager manager;
-
-    [System.NonSerialized, HideInInspector]
-    private ARLocationManagerEntry entry;
-
-    public GameObject thePrefab;
-
-    // Use this for initialization
-    void Start () { 
-        /*
-        manager = ARLocationManager.Instance;
-
-        entry = new ARLocationManagerEntry
-        {
-            instance = gameObject,
-            location = location.Clone(),
-            options = new ARLocationObjectOptions
-            {
-                isHeightRelative = isHeightRelative,
-                showDebugInfoPanel = showDebugInfoPanel,
-                movementSmoothingFactor = movementSmoothingFactor,
-                createInstance = true
-            }
-        };
-
-        manager.Add(entry);
-        */
-    }
-    
-    public void CreateMessage()
+    public class ARLocationPlaceAtLocation : MonoBehaviour
     {
-        manager = ARLocationManager.Instance;
+        /// <summary>
+        /// The location to place the GameObject at.
+        /// </summary>
+   
 
-        entry = new ARLocationManagerEntry
+        /// <summary>
+        /// If true, the altitude will be computed as relative to the device level.
+        /// </summary>
+        [Tooltip("If true, the altitude will be computed as relative to the device level.")]
+        public bool isHeightRelative = true;
+
+        /// <summary>
+        /// If true, will display a UI panel with debug information above the object.
+        /// </summary>
+        [Tooltip("If true, will display a UI panel with debug information above the object.")]
+        public bool showDebugInfoPanel = true;
+
+        /// <summary>
+        /// The smoothing factor for movement due to GPS location adjustments; if set to zero it is disabled.
+        /// </summary>
+        [Tooltip("The smoothing factor for movement due to GPS location adjustments; if set to zero it is disabled."), Range(0, 500)]
+        public float movementSmoothingFactor = 120f;
+
+        public List<Location> locations;
+
+        ARLocationManager manager;
+        UsingGps gps;
+        Location location;
+
+        public InputField Mlabel; // InputField
+        public GameObject thePrefab; // 오브젝트 모양 
+        public int cnt = 0; // 오브젝트 갯수 
+
+
+        DatabaseReference databaseReference;
+        FirebaseApp firebaseApp;
+
+        // Use this for initialization
+        public void Awake()
         {
-            instance = thePrefab,
-            location = location.MClone(),
-            options = new ARLocationObjectOptions
+            
+            gps = GameObject.Find("GpsMachine").GetComponent<UsingGps>();
+            
+            firebaseApp = FirebaseDatabase.DefaultInstance.App;
+            FirebaseApp.DefaultInstance.SetEditorDatabaseUrl("https://littletigers-44351.firebaseio.com");
+            databaseReference = FirebaseDatabase.DefaultInstance.RootReference;
+
+            FirebaseDatabase.DefaultInstance.GetReference("ARMessages").GetValueAsync().ContinueWith(task =>
             {
-                isHeightRelative = isHeightRelative,
-                showDebugInfoPanel = showDebugInfoPanel,
-                movementSmoothingFactor = movementSmoothingFactor,
-                createInstance = true
-            },
-            Text = "몰라알수가없어"
-        };
+                if (task.IsFaulted)
+                {
+                    Debug.Log("Database Error");
+                }
+                else if (task.IsCompleted)
+                {
+                    DataSnapshot snapshot = task.Result;
+                    foreach (var item in snapshot.Children)
+                    {
+                        Location location = new Location();
+                        location.altitude = Convert.ToDouble(item.Child("altitude").Value);
+                        location.ignoreAltitude = Convert.ToBoolean(item.Child("ignoreAltitude").Value);
+                        location.label = Convert.ToString(item.Child("label").Value);
+                        location.latitude = Convert.ToDouble(item.Child("latitude").Value);
+                        location.longitude = Convert.ToDouble(item.Child("longitude").Value);
+                        cnt++;
+                        locations.Add(location);
+                    }
+                }
+            });
+            
+        }
 
-        manager.Add(entry);
+        IEnumerator Start()
+        {
+            yield return new WaitForSeconds(0.5f);
+            manager = ARLocationManager.Instance;
+
+            if (manager == null)
+            {
+                Debug.LogError("[ARFoundation+GPSLocation][PlaceAtLocations]: ARLocatedObjectsManager Component not found.");
+            
+            }
+        
+
+            locations.ForEach(AddLocation);
+        }
+
+        public void ClickButton()
+        {
+            writeNewMessage(cnt, gps.Dlongitude, gps.Dlatitude, Mlabel.text);
+            Mlabel.text = "";
+            cnt++;
+        }
+
+
+        public void writeNewMessage(int mid, double longitude, double latitude, string label) //DB에 메시지 추가 
+        {
+            Location location = new Location();
+            location.longitude = longitude;
+            location.latitude = latitude;
+            location.label = label;
+            location.altitude = 1.0;
+            string json = JsonUtility.ToJson(location);
+            databaseReference.Child("ARMessages").Child(mid.ToString()).SetRawJsonValueAsync(json);
+            Relocation(location);
+        }
+
+        public void Relocation(Location location) //DB에 정보가 추가되면 다시 재위치
+        {
+            AddLocation(location);
+        }
+
+        public void AddLocation(Location location)
+        {
+            manager.Add(new ARLocationManagerEntry
+            {
+                instance = thePrefab,
+                location = location,
+                options = new ARLocationObjectOptions
+                {
+                    isHeightRelative = isHeightRelative,
+                    showDebugInfoPanel = showDebugInfoPanel,
+                    movementSmoothingFactor = movementSmoothingFactor,
+                    createInstance = true,
+                }
+            });
+        }
+
+
+
+
     }
-    
-    
-    /// <summary>
-    /// Sets the GameObject's location to a new one.
-    /// </summary>
-    /// <param name="newLocation"></param>
-    public void SetLocation(Location newLocation)
-     {
-         location = newLocation.Clone();
-         entry.location = newLocation.Clone();
-     }
-
 }

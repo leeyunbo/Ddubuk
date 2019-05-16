@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="__arcore_cancel">Cancelar</string>
+    <string name="__arcore_continue">Continuar</string>
+    <string name="__arcore_install_app">Este aplicativo precisa da versão mais recente do ARCore.</string>
+    <string name="__arcore_install_feature">Este recurso precisa da versão mais recente do ARCore.</string>
+    <string name="__arcore_installing">Instalando o ARCore…</string>
+    <string msgid="2869576371154716097" name="status_bar_notification_info_overflow">"999+"</string>
+</resources>

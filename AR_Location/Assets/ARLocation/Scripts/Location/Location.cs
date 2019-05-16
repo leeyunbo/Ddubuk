@@ -63,12 +63,17 @@ public class Location
         this.longitude = longitude;
         this.altitude = altitude;
     }
-
-    public Location(double latitude, double longitude ,double altitude = 1.0, bool yesorno = true)      
+    /*
+    public Location(double latitude, double longitude, double altitude, bool useGps = true)      
     {
         this.latitude = getGpsLatitude();
         this.longitude = getGpsLongitude();
         this.altitude = altitude;
+    }*/
+    public Location() {
+        this.latitude = 0.0;
+        this.longitude = 0.0;
+        this.altitude = 1.0;
     }
 
   
@@ -80,11 +85,11 @@ public class Location
     {
         return new Location(latitude, longitude, altitude);
     }
-
+    /*
     public Location MClone()
     {
         return new Location(latitude, longitude, altitude, true);
-    }
+    }*/
 
 
     override public string ToString()
@@ -133,64 +138,7 @@ public class Location
     /// <param name="l2"></param>
     /// <returns></returns>
     /// 
-    public double getGpsLatitude()
-    {
-      
-
-        Input.location.Start(0.5f);
-        int wait = 1000; // 기본 값
-
-        // Checks if the GPS is enabled by the user (-> Allow location ) 
-
-        if (Input.location.isEnabledByUser)//사용자에 의하여 좌표값을 실행 할 수 있을 경우
-        {
-
-            while (Input.location.status == LocationServiceStatus.Initializing && wait > 0)//초기화 진행중이면
-            {
-                wait--; // 기다리는 시간을 뺀다
-            }
-
-            //GPS를 잡는 대기시간
-
-            if (Input.location.status != LocationServiceStatus.Failed)//GPS가 실행중이라면
-            {
-                gpsInit = true;
-            }
-
-
-        }
-        return currentGPSPosition.latitude * detailed_num;
-
-    }
-
-    public double getGpsLongitude()
-    {
-        Input.location.Start(0.5f);
-        int wait = 1000; // 기본 값
-
-        // Checks if the GPS is enabled by the user (-> Allow location ) 
-
-        if (Input.location.isEnabledByUser)//사용자에 의하여 좌표값을 실행 할 수 있을 경우
-        {
-
-            while (Input.location.status == LocationServiceStatus.Initializing && wait > 0)//초기화 진행중이면
-            {
-                wait--; // 기다리는 시간을 뺀다
-            }
-
-            //GPS를 잡는 대기시간
-
-            if (Input.location.status != LocationServiceStatus.Failed)//GPS가 실행중이라면
-            {
-                gpsInit = true;
-
-            }
-
-
-        }
-        return currentGPSPosition.longitude * detailed_num;
-
-    }
+    
     public static double PlaneSphericalDistance(Location l1, Location l2)
     {
         var R = ARLocation.config.EarthRadiusInKM;
