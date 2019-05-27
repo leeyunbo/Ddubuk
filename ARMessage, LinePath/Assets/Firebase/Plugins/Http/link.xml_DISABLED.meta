@@ -1,0 +1,12 @@
+fileFormatVersion: 2
+guid: 03cbcc2e74b94663a240e4eafa216770
+labels:
+- gvh
+- gvh_rename_to_disable
+- gvh_targets-windows-windows64-osx-osxintel-osxintel64-linux-linux32-linux64
+- gvh_version-6.0.0
+TextScriptImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

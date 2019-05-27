@@ -1,0 +1,4 @@
+sceneSetups:
+- path: Assets/ARLocation/ARScene/AR Message.unity
+  isLoaded: 1
+  isActive: 1

@@ -1,0 +1,26 @@
+{
+    "logs": [
+        {
+            "outputFile": "C:\\Users\\cw020\\Documents\\LinePathLast\\Temp\\gradleOut\\build\\intermediates\\incremental\\mergeReleaseResources\\merged.dir\\values-zh\\values-zh.xml",
+            "map": [
+                {
+                    "source": "C:\\Users\\cw020\\.gradle\\caches\\transforms-1\\files-1.1\\arcore_client.aar\\b4e7582586b886ff23e565ccc6a74017\\res\\values-zh\\values.xml",
+                    "from": {
+                        "startLines": "4,5,6,7,8",
+                        "startColumns": "0,0,0,0,0",
+                        "startOffsets": "190,233,278,350,426",
+                        "endColumns": "42,44,71,75,56",
+                        "endOffsets": "232,277,349,425,482"
+                    },
+                    "to": {
+                        "startLines": "2,3,4,5,6",
+                        "startColumns": "4,4,4,4,4",
+                        "startOffsets": "55,102,151,227,307",
+                        "endColumns": "46,48,75,79,60",
+                        "endOffsets": "97,146,222,302,363"
+                    }
+                }
+            ]
+        }
+    ]
+}
