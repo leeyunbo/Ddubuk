@@ -1,0 +1,77 @@
+{
+    "logs": [
+        {
+            "outputFile": "C:\\Users\\cw020\\Documents\\LinePathLastBackUp\\Temp\\gradleOut\\build\\intermediates\\incremental\\mergeReleaseResources\\merged.dir\\values-fa\\values-fa.xml",
+            "map": [
+                {
+                    "source": "C:\\Users\\cw020\\.gradle\\caches\\transforms-1\\files-1.1\\com.android.support.support-compat-26.1.0.aar\\e561ca8455a146af3fbcdfd27c9ce2a5\\res\\values-fa\\values-fa.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "100",
+                        "endOffsets": "151"
+                    },
+                    "to": {
+                        "startLines": "25",
+                        "startColumns": "4",
+                        "startOffsets": "3195",
+                        "endColumns": "100",
+                        "endOffsets": "3291"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\cw020\\.gradle\\caches\\transforms-1\\files-1.1\\arcore_client.aar\\af6303d553d48758c7bc35c4e22a3df3\\res\\values-fa\\values.xml",
+                    "from": {
+                        "startLines": "4,5,6,7,8",
+                        "startColumns": "0,0,0,0,0",
+                        "startOffsets": "190,234,282,373,468",
+                        "endColumns": "43,47,90,94,61",
+                        "endOffsets": "233,281,372,467,529"
+                    },
+                    "to": {
+                        "startLines": "2,3,4,5,6",
+                        "startColumns": "4,4,4,4,4",
+                        "startOffsets": "105,153,205,300,399",
+                        "endColumns": "47,51,94,98,65",
+                        "endOffsets": "148,200,295,394,460"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\cw020\\.gradle\\caches\\transforms-1\\files-1.1\\com.google.android.gms.play-services-basement-16.2.0.aar\\1e5db1d6d88c7b42891a9fe1bddf3db6\\res\\values-fa\\values.xml",
+                    "from": {
+                        "startLines": "4",
+                        "startColumns": "0",
+                        "startOffsets": "247",
+                        "endColumns": "213",
+                        "endOffsets": "460"
+                    },
+                    "to": {
+                        "startLines": "15",
+                        "startColumns": "4",
+                        "startOffsets": "1609",
+                        "endColumns": "213",
+                        "endOffsets": "1818"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\cw020\\.gradle\\caches\\transforms-1\\files-1.1\\com.google.android.gms.play-services-base-16.0.1.aar\\d951cb35d435283e44ad5adeb743ba2a\\res\\values-fa\\values.xml",
+                    "from": {
+                        "startLines": "4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20",
+                        "startColumns": "0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0",
+                        "startOffsets": "245,351,542,671,772,971,1097,1238,1365,1577,1685,1888,2019,2233,2417,2509,2603",
+                        "endColumns": "105,190,128,100,198,125,140,126,211,107,202,130,213,183,91,93,109",
+                        "endOffsets": "350,541,670,771,970,1096,1237,1364,1576,1684,1887,2018,2232,2416,2508,2602,2712"
+                    },
+                    "to": {
+                        "startLines": "7,8,9,10,11,12,13,14,16,17,18,19,20,21,22,23,24",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "465,575,766,899,1004,1203,1333,1478,1823,2035,2147,2350,2485,2699,2887,2983,3081",
+                        "endColumns": "109,190,132,104,198,129,144,130,211,111,202,134,213,187,95,97,113",
+                        "endOffsets": "570,761,894,999,1198,1328,1473,1604,2030,2142,2345,2480,2694,2882,2978,3076,3190"
+                    }
+                }
+            ]
+        }
+    ]
+}

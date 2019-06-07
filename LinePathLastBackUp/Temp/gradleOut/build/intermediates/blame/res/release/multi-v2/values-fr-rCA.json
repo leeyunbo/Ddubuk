@@ -1,0 +1,77 @@
+{
+    "logs": [
+        {
+            "outputFile": "C:\\Users\\cw020\\Documents\\LinePathLastBackUp\\Temp\\gradleOut\\build\\intermediates\\incremental\\mergeReleaseResources\\merged.dir\\values-fr-rCA\\values-fr-rCA.xml",
+            "map": [
+                {
+                    "source": "C:\\Users\\cw020\\.gradle\\caches\\transforms-1\\files-1.1\\com.google.android.gms.play-services-base-16.0.1.aar\\d951cb35d435283e44ad5adeb743ba2a\\res\\values-fr-rCA\\values.xml",
+                    "from": {
+                        "startLines": "4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20",
+                        "startColumns": "0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0",
+                        "startOffsets": "249,353,565,693,800,1030,1161,1308,1446,1700,1810,2026,2160,2379,2584,2683,2773",
+                        "endColumns": "103,211,127,106,229,130,146,137,253,109,215,133,218,204,98,89,108",
+                        "endOffsets": "352,564,692,799,1029,1160,1307,1445,1699,1809,2025,2159,2378,2583,2682,2772,2881"
+                    },
+                    "to": {
+                        "startLines": "7,8,9,10,11,12,13,14,16,17,18,19,20,21,22,23,24",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "517,625,837,969,1080,1310,1445,1596,1958,2212,2326,2542,2680,2899,3108,3211,3305",
+                        "endColumns": "107,211,131,110,229,134,150,141,253,113,215,137,218,208,102,93,112",
+                        "endOffsets": "620,832,964,1075,1305,1440,1591,1733,2207,2321,2537,2675,2894,3103,3206,3300,3413"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\cw020\\.gradle\\caches\\transforms-1\\files-1.1\\com.android.support.support-compat-26.1.0.aar\\e561ca8455a146af3fbcdfd27c9ce2a5\\res\\values-fr-rCA\\values-fr-rCA.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "100",
+                        "endOffsets": "151"
+                    },
+                    "to": {
+                        "startLines": "25",
+                        "startColumns": "4",
+                        "startOffsets": "3418",
+                        "endColumns": "100",
+                        "endOffsets": "3514"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\cw020\\.gradle\\caches\\transforms-1\\files-1.1\\arcore_client.aar\\af6303d553d48758c7bc35c4e22a3df3\\res\\values-fr-rCA\\values.xml",
+                    "from": {
+                        "startLines": "4,5,6,7,8",
+                        "startColumns": "0,0,0,0,0",
+                        "startOffsets": "194,242,294,398,509",
+                        "endColumns": "47,51,103,110,76",
+                        "endOffsets": "241,293,397,508,585"
+                    },
+                    "to": {
+                        "startLines": "2,3,4,5,6",
+                        "startColumns": "4,4,4,4,4",
+                        "startOffsets": "105,157,213,321,436",
+                        "endColumns": "51,55,107,114,80",
+                        "endOffsets": "152,208,316,431,512"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\cw020\\.gradle\\caches\\transforms-1\\files-1.1\\com.google.android.gms.play-services-basement-16.2.0.aar\\1e5db1d6d88c7b42891a9fe1bddf3db6\\res\\values-fr-rCA\\values.xml",
+                    "from": {
+                        "startLines": "4",
+                        "startColumns": "0",
+                        "startOffsets": "251",
+                        "endColumns": "219",
+                        "endOffsets": "470"
+                    },
+                    "to": {
+                        "startLines": "15",
+                        "startColumns": "4",
+                        "startOffsets": "1738",
+                        "endColumns": "219",
+                        "endOffsets": "1953"
+                    }
+                }
+            ]
+        }
+    ]
+}
