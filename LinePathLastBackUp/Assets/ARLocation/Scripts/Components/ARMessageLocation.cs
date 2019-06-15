@@ -47,7 +47,7 @@ namespace Gps
 
         public InputField Mlabel; // InputField
         public GameObject thePrefab; // 오브젝트 모양 
-        public int cnt = 0; // 오브젝트 갯수 
+    
 
 
         DatabaseReference databaseReference;
@@ -79,7 +79,6 @@ namespace Gps
                         location.label = Convert.ToString(item.Child("label").Value);
                         location.latitude = Convert.ToDouble(item.Child("latitude").Value);
                         location.longitude = Convert.ToDouble(item.Child("longitude").Value);
-                        cnt++;
                         locations.Add(location);
                     }
                 }
@@ -100,30 +99,31 @@ namespace Gps
         
 
             locations.ForEach(AddLocation);
+            HandleChildListener();
         }
 
         public void update()
         {
-            //DB가 커밋되면 다시 불러오는것도 해야함 
+            
         }
 
         public void ClickButton()
         {
-            writeNewMessage(cnt, gps.Dlongitude, gps.Dlatitude, Mlabel.text);
-            Mlabel.text = "";
-            cnt++;
+            writeNewMessage( gps.Dlongitude, gps.Dlatitude, Mlabel.text);
+            Mlabel.text = "";            
         }
 
 
-        public void writeNewMessage(int mid, double longitude, double latitude, string label) //DB에 메시지 추가 
+        public void writeNewMessage(double longitude, double latitude, string label) //DB에 메시지 추가 
         {
+            string key = databaseReference.Child("ARMessages").Push().Key;
             Location location = new Location();
             location.longitude = longitude;
             location.latitude = latitude;
             location.label = label;
             location.altitude = 1.0;
             string json = JsonUtility.ToJson(location);
-            databaseReference.Child("ARMessages").Child(mid.ToString()).SetRawJsonValueAsync(json);
+            databaseReference.Child("ARMessages").Child(key).SetRawJsonValueAsync(json);
             Relocation(location);
         }
 
@@ -149,6 +149,38 @@ namespace Gps
                     createInstance = true,
                 }
             });
+        }
+
+        void HandleValueChanged(object sender, ValueChangedEventArgs args)
+        {
+            if(args.DatabaseError != null)
+            {
+                Debug.LogError(args.DatabaseError.Message);
+                return;
+            }
+            int cnt = 0;
+            foreach (var item in args.Snapshot.Children)
+            {
+                Location location = new Location();
+                location.altitude = Convert.ToDouble(item.Child("altitude").Value);
+                location.ignoreAltitude = Convert.ToBoolean(item.Child("ignoreAltitude").Value);
+                location.label = Convert.ToString(item.Child("label").Value);
+                location.latitude = Convert.ToDouble(item.Child("latitude").Value);
+                location.longitude = Convert.ToDouble(item.Child("longitude").Value);
+                if (cnt == locations.Count)
+                {
+                    locations.Add(location);
+                    Relocation(location);
+                }
+                cnt++;
+            }
+            print("value changed");
+            
+        }
+
+        public void HandleChildListener()
+        {
+            databaseReference.Child("ARMessages").ValueChanged += HandleValueChanged;
         }
 
 
