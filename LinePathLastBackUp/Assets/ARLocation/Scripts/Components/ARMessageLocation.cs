@@ -39,6 +39,7 @@ namespace Gps
         [Tooltip("The smoothing factor for movement due to GPS location adjustments; if set to zero it is disabled."), Range(0, 500)]
         public float movementSmoothingFactor = 120f;
 
+        GameObject PopupMessage; 
         public List<Location> locations;
 
         ARLocationManager manager;
@@ -55,7 +56,9 @@ namespace Gps
 
         // Use this for initialization
         public void Awake()
-        {            
+        {
+            PopupMessage = GameObject.Find("PopupMessage");
+            PopupMessage.SetActive(false);
             gps = GameObject.Find("GpsMachine").GetComponent<UsingGps>();
             
             firebaseApp = FirebaseDatabase.DefaultInstance.App;
@@ -109,8 +112,18 @@ namespace Gps
 
         public void ClickButton()
         {
+            if(String.IsNullOrWhiteSpace(Mlabel.text))
+            {
+                PopupMessage.SetActive(true);
+                return;
+            }
             writeNewMessage( gps.Dlongitude, gps.Dlatitude, Mlabel.text);
             Mlabel.text = "";            
+        }
+
+        public void ClickPopupMessageButton()
+        {
+            PopupMessage.SetActive(false);
         }
 
 
@@ -124,7 +137,7 @@ namespace Gps
             location.altitude = 1.0;
             string json = JsonUtility.ToJson(location);
             databaseReference.Child("ARMessages").Child(key).SetRawJsonValueAsync(json);
-            Relocation(location);
+            //Relocation(location);
         }
 
         public void Relocation(Location location) //DB에 정보가 추가되면 다시 재위치
