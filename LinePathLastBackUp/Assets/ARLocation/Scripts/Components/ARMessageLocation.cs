@@ -39,7 +39,9 @@ namespace Gps
         [Tooltip("The smoothing factor for movement due to GPS location adjustments; if set to zero it is disabled."), Range(0, 500)]
         public float movementSmoothingFactor = 120f;
 
-        GameObject PopupMessage; 
+        GameObject PopupMessage;
+   
+
         public List<Location> locations;
 
         ARLocationManager manager;
@@ -112,8 +114,16 @@ namespace Gps
 
         public void ClickButton()
         {
-            if(String.IsNullOrWhiteSpace(Mlabel.text))
+            if(String.IsNullOrWhiteSpace(Mlabel.text) || Mlabel.text.Length > 150)       
             {
+                if(Mlabel.text.Length > 150)
+                {
+                    PopupMessage.transform.GetChild(1).GetComponent<Text>().text = "150자 이하로 입력해주세요.";
+                }
+                else
+                {
+                    PopupMessage.transform.GetChild(1).GetComponent<Text>().text = "메시지 내용을 입력해주세요.";
+                }
                 PopupMessage.SetActive(true);
                 return;
             }
@@ -148,7 +158,7 @@ namespace Gps
         public void AddLocation(Location location)
         {
             GameObject Prefab = thePrefab;
-            Prefab.GetComponentInChildren<TextMesh>().text = location.label;
+            Prefab.GetComponentInChildren<Text>().text = location.label;
 
             manager.Add(new ARLocationManagerEntry
             {

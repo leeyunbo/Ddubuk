@@ -1,6 +1,6 @@
 Android
 PlayerPath?
-C:/Users/cw020/Desktop/2.apk
+C:/Users/serve/Desktop/testMessage5.apk
 SceneListBegin?
 Assets/ARLocation/ARScene/AR Message.unity
 SceneListEnd?
@@ -136,7 +136,7 @@ b2e7e5f03edd90c79d1fac2753059d82 Assembly-CSharp.dll:.POIRESTAURANT
 290afc8da8e459e0b8dc7444bfaf5e35 Unity.XR.ARFoundation.dll:UnityEngine.XR.ARFoundation.ARFace
 abac480d483f75765eb9d5641e485f32 Assembly-CSharp.dll:.LocationPath
 84a8992044c9d93a95ba9320eeabf58d Assembly-CSharp.dll:.ARLocationMoveAlongPath
-501547184c9d0eadcf190a92a93487e7 Assembly-CSharp.dll:Gps.ARMessageLocation
+fbf94b5f00d74b13f34d6632f536f1c4 Assembly-CSharp.dll:Gps.ARMessageLocation
 0077fc8e4fbae67f80e80ebd534de5a0 Vuforia.UnityExtensions.dll:Vuforia.AnchorBehaviour
 f8b139fcde9fda6214245df246415cc7 Vuforia.UnityExtensions.dll:Vuforia.AnchorInputListenerBehaviour
 0077fc8e4fbae67f80e80ebd534de5a0 Vuforia.UnityExtensions.dll:Vuforia.AnchorStageBehaviour
