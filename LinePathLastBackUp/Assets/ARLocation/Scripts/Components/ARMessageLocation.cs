@@ -39,33 +39,33 @@ namespace Gps
         [Tooltip("The smoothing factor for movement due to GPS location adjustments; if set to zero it is disabled."), Range(0, 500)]
         public float movementSmoothingFactor = 120f;
 
-        GameObject PopupMessage;
+        GameObject PopupMessage; // 오류 메시지 오브젝트 
    
 
-        public List<Location> locations;
+        public List<Location> locations; // 메시지의 정보를 담아줄 리스트 
 
         ARLocationManager manager;
-        UsingGps gps;
-        Location location;
+        UsingGps gps; // gps 객체
+        Location location; // 메시지 정보 클래스 객체 
 
         public InputField Mlabel; // InputField
-        public GameObject thePrefab; // 오브젝트 모양 
+        public GameObject thePrefab; // 메시지 오브젝트 
     
 
 
         DatabaseReference databaseReference;
-        FirebaseApp firebaseApp;
+        FirebaseApp firebaseApp;  // 파이어베이스 객체 
 
         // Use this for initialization
         public void Awake()
         {
             PopupMessage = GameObject.Find("PopupMessage");
             PopupMessage.SetActive(false);
-            gps = GameObject.Find("GpsMachine").GetComponent<UsingGps>();
+            gps = GameObject.Find("GpsMachine").GetComponent<UsingGps>(); // gps 센서 작동 시작 
             
             firebaseApp = FirebaseDatabase.DefaultInstance.App;
             FirebaseApp.DefaultInstance.SetEditorDatabaseUrl("https://littletigers-44351.firebaseio.com");
-            databaseReference = FirebaseDatabase.DefaultInstance.RootReference;
+            databaseReference = FirebaseDatabase.DefaultInstance.RootReference; // 파이어베이스 접근
 
             FirebaseDatabase.DefaultInstance.GetReference("ARMessages").GetValueAsync().ContinueWith(task =>
             {
@@ -87,7 +87,7 @@ namespace Gps
                         locations.Add(location);
                     }
                 }
-            });
+            });  //파이어베이스에 존재하는 메시지 관련 데이터 읽어오기
             
         }
 
@@ -103,8 +103,8 @@ namespace Gps
             }
         
 
-            locations.ForEach(AddLocation);
-            HandleChildListener();
+            locations.ForEach(AddLocation); //메시지 정보들을 이용해, 해당 위치에 메시지를 띄어줌
+            HandleChildListener(); //다른 사용자들 데이터베이스 접근 감지
         }
 
         public void update()
@@ -112,15 +112,15 @@ namespace Gps
             
         }
 
-        public void ClickButton()
+        public void ClickButton() //원하는 내용을 담은 메시지를 현재 자신의 위치에 띄우기
         {
             if(String.IsNullOrWhiteSpace(Mlabel.text) || Mlabel.text.Length > 150)       
             {
-                if(Mlabel.text.Length > 150)
+                if(Mlabel.text.Length > 150) //150자 이하로만 입력 가능
                 {
                     PopupMessage.transform.GetChild(1).GetComponent<Text>().text = "150자 이하로 입력해주세요.";
                 }
-                else
+                else //만약 메시지 내용이 없으면 return 
                 {
                     PopupMessage.transform.GetChild(1).GetComponent<Text>().text = "메시지 내용을 입력해주세요.";
                 }
@@ -131,7 +131,7 @@ namespace Gps
             Mlabel.text = "";            
         }
 
-        public void ClickPopupMessageButton()
+        public void ClickPopupMessageButton() // 팝업 메시지 버튼 누르면 팝업 메시지 오브젝트 사라지게
         {
             PopupMessage.SetActive(false);
         }
@@ -155,7 +155,7 @@ namespace Gps
             AddLocation(location);
         }
 
-        public void AddLocation(Location location)
+        public void AddLocation(Location location) //메시지 위치 시키기
         {
             GameObject Prefab = thePrefab;
             Prefab.GetComponentInChildren<Text>().text = location.label;
@@ -174,7 +174,7 @@ namespace Gps
             });
         }
 
-        void HandleValueChanged(object sender, ValueChangedEventArgs args)
+        void HandleValueChanged(object sender, ValueChangedEventArgs args) //다른 사용자들이 데이터베이스 접근하는 것 감지
         {
             if(args.DatabaseError != null)
             {
