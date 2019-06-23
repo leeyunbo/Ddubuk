@@ -47,7 +47,6 @@ public class POIBUSSTOP : MonoBehaviour
 
     private void Start()
     {
-        PlayerPrefs.SetString("BUSSTOP", "시흥정류소,126.73311361149682,37.33972388671695|투썸플레이스,126.73394410608223,37.33919618485945|이디야,126.73432737567681,37.340237737398326|");
         string RecLocation = PlayerPrefs.GetString("BUSSTOP");
 
         List<Location> locations = new List<Location>();

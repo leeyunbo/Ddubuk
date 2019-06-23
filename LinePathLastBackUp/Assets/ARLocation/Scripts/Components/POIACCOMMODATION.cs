@@ -57,10 +57,11 @@ public class POIACCOMMODATION : MonoBehaviour
 
         string[] val = RecLocation.Split('|');
         string[] val2;
-     
+
         manager = ARLocationManager.Instance;
 
-        if (manager == null) {
+        if (manager == null)
+        {
             Debug.LogError("[ARFoundation+GPSLocation][PlaceAtLocations]: ARLocatedObjectsManager Component not found.");
             return;
         }
@@ -69,9 +70,10 @@ public class POIACCOMMODATION : MonoBehaviour
         {
             val2 = val[i].Split(',');
             Location location1 = new Location();
-            location1.longitude = Convert.ToDouble(val2[0]);
-            location1.latitude = Convert.ToDouble(val2[1]);
-            location1.altitude = -1.7;
+            location1.label = val2[0];
+            location1.longitude = Convert.ToDouble(val2[1]);
+            location1.latitude = Convert.ToDouble(val2[2]);
+            location1.altitude = -1.5;
             locations.Add(location1);
         }
 
@@ -88,7 +90,8 @@ public class POIACCOMMODATION : MonoBehaviour
         {
             instance = prefab,
             location = location,
-            options = new ARLocationObjectOptions {
+            options = new ARLocationObjectOptions
+            {
                 isHeightRelative = isHeightRelative,
                 showDebugInfoPanel = showDebugInfoPanel,
                 movementSmoothingFactor = movementSmoothingFactor,

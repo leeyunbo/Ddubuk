@@ -48,6 +48,7 @@ public class LocationPathPoint : MonoBehaviour
 
     private void Start()
     {
+        
         string RecLocation = PlayerPrefs.GetString("LocationPath");
 
         List<Location> locations = new List<Location>();
@@ -70,20 +71,18 @@ public class LocationPathPoint : MonoBehaviour
         for (int i = 0; i < cnt; i++)
         {
             Location location1 = new Location();
-            if (i == 0)
-            {              
-                location1.longitude = locationProvider.currentLocation.longitude;
-                location1.latitude = locationProvider.currentLocation.latitude;
-                location1.altitude = 0;
+            if (i == 0 || i == cnt - 1)
+            {
+                continue;
             }
             else
             {
                 val2 = val[i - 1].Split(',');              
                 location1.longitude = Convert.ToDouble(val2[0]);
                 location1.latitude = Convert.ToDouble(val2[1]);
-                location1.altitude = 0;
+                location1.altitude = 1.5;
+                locations.Add(location1);
             }
-            locations.Add(location1);
         }
 
         locations.ForEach(AddLocation);

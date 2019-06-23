@@ -73,7 +73,7 @@ public class ARLocationRenderPathLine : MonoBehaviour
         //{
         //    throw new System.Exception("null location path");
         //}
-
+    
         string RecLocation = PlayerPrefs.GetString("LocationPath");
 
         string word = "|";
@@ -114,7 +114,7 @@ public class ARLocationRenderPathLine : MonoBehaviour
     void SetupDebugObjects()
     {
         string RecLocation = PlayerPrefs.GetString("LocationPath");
-       
+
         string word = "|";
         string[] words = RecLocation.Split(new string[] { word }, StringSplitOptions.None);
         int cnt = words.Length;
@@ -130,7 +130,6 @@ public class ARLocationRenderPathLine : MonoBehaviour
                 location1.longitude = locationProvider.currentLocation.longitude;
                 location1.latitude = locationProvider.currentLocation.latitude;
                 location1.altitude = -1.5;
-                location1.label = "START";
             }
             else if (i == cnt - 1)
             {
@@ -138,7 +137,6 @@ public class ARLocationRenderPathLine : MonoBehaviour
                 location1.longitude = Convert.ToDouble(val2[0]);
                 location1.latitude = Convert.ToDouble(val2[1]);
                 location1.altitude = -1.5;
-                location1.label = "END";
             }
             else
             {
@@ -146,7 +144,6 @@ public class ARLocationRenderPathLine : MonoBehaviour
                 location1.longitude = Convert.ToDouble(val2[0]);
                 location1.latitude = Convert.ToDouble(val2[1]);
                 location1.altitude = -1.5;
-                location1.label = "Turn Point";
             }
 
             var go = GameObject.CreatePrimitive(PrimitiveType.Sphere);
@@ -176,7 +173,7 @@ public class ARLocationRenderPathLine : MonoBehaviour
     void BuildSlpine(Location location)
     {
         string RecLocation = PlayerPrefs.GetString("LocationPath");
-        
+
         string word = "|";
         string[] words = RecLocation.Split(new string[] { word }, StringSplitOptions.None);
         int cnt = words.Length;
@@ -192,7 +189,6 @@ public class ARLocationRenderPathLine : MonoBehaviour
                 location1.longitude = locationProvider.currentLocation.longitude;
                 location1.latitude = locationProvider.currentLocation.latitude;
                 location1.altitude = -1.5;
-                location1.label = "START";
             }
             else if (i == cnt - 1)
             {
@@ -200,7 +196,6 @@ public class ARLocationRenderPathLine : MonoBehaviour
                 location1.longitude = Convert.ToDouble(val2[0]);
                 location1.latitude = Convert.ToDouble(val2[1]);
                 location1.altitude = -1.5;
-                location1.label = "END";
             }
             else
             {

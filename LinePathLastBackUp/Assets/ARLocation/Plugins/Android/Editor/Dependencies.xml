@@ -30,8 +30,8 @@
       </repositories>--><!--
     </androidPackage>-->
 
-    <androidPackage spec="com.google.android.gms:play-services-location:12.0.0" />
-    <androidPackage spec="org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.0" />
+    <androidPackage spec="com.google.android.gms:play-services-location:16.0.0" />
+    <androidPackage spec="org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.20" />
 
   </androidPackages>
 

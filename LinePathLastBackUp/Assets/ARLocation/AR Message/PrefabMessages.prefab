@@ -222,7 +222,7 @@ GameObject:
   - component: {fileID: 6488020419710816094}
   - component: {fileID: 3724751062943797680}
   m_Layer: 0
-  m_Name: PrefabMessages
+  m_Name: PrefabMessage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
