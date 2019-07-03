@@ -45,3 +45,9 @@ Haversine formula
 Haversine formula란 구에서 두가지 점을 찍었을 때 거리를 구할 수 있는 알고리즘  
 
 완벽하게 정확한 방법은 아니지만, Haversine formula를 이용해 충분히 구현할 수 있다고 판단해 선택
+
+Firebase 
+-------------------------------------
+Realtime DB를 이용하여 다양한 커뮤니케이션 구현 
+
+
