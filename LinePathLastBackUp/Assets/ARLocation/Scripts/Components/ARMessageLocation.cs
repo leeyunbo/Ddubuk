@@ -40,6 +40,7 @@ namespace Gps
         public float movementSmoothingFactor = 120f;
 
         GameObject PopupMessage;
+        GameObject LoadingPopup;
 
 
         public List<Location> locations;
@@ -60,6 +61,7 @@ namespace Gps
         public void Awake()
         {
             PopupMessage = GameObject.Find("PopupMessage");
+            LoadingPopup = GameObject.Find("LoadingPopup");
             PopupMessage.SetActive(false);
             gps = GameObject.Find("GpsMachine").GetComponent<UsingGps>();
 
@@ -88,7 +90,7 @@ namespace Gps
                         AddLocation(location);
                     }
                 }
-            });
+            });       
 
         }
 
@@ -102,10 +104,9 @@ namespace Gps
                 Debug.LogError("[ARFoundation+GPSLocation][PlaceAtLocations]: ARLocatedObjectsManager Component not found.");
 
             }
-
-
-            
+          
             HandleChildListener();
+            LoadingPopup.GetComponent<Canvas>().enabled = false;
         }
 
         public void update()
