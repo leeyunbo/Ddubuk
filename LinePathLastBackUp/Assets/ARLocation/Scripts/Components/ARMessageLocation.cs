@@ -116,11 +116,11 @@ namespace Gps
 
         public void ClickButton()
         {
-            if (String.IsNullOrWhiteSpace(Mlabel.text) || Mlabel.text.Length > 150)
+            if (String.IsNullOrWhiteSpace(Mlabel.text) || Mlabel.text.Length > 60)
             {
                 if (Mlabel.text.Length > 150)
                 {
-                    PopupMessage.transform.GetChild(1).GetComponent<Text>().text = "150자 이하로 입력해주세요.";
+                    PopupMessage.transform.GetChild(1).GetComponent<Text>().text = "60자 이하로 입력해주세요.";
                 }
                 else
                 {
