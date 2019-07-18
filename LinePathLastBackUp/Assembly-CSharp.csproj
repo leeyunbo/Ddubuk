@@ -106,6 +106,7 @@
     <Compile Include="Assets\ARLocation\Scripts\UI\LoadingBar.cs" />
     <Compile Include="Assets\ARLocation\Scripts\UI\LocationProviderInfo.cs" />
     <Compile Include="Assets\ARLocation\Scripts\UI\OrientationInfo.cs" />
+    <Compile Include="Assets\ARLocation\Scripts\UI\Progressbar.cs" />
     <Compile Include="Assets\ARLocation\Scripts\Utils\ARLocationDebugCanvas.cs" />
     <Compile Include="Assets\ARLocation\Scripts\Utils\ARLocationDevCameraController.cs" />
     <Compile Include="Assets\ARLocation\Scripts\Utils\CreatePointOfInterestTextMeshes.cs" />
