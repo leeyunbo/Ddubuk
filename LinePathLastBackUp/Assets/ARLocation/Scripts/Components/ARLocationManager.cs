@@ -9,6 +9,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
+using UnityEngine.UI;
 
 #if !ARGPS_USE_VUFORIA
 using UnityEngine.XR.ARFoundation;
@@ -101,7 +102,7 @@ public class ARLocationManager : Singleton<ARLocationManager>
     /// </summary>
     [Tooltip("An array describing a set of objects to be placed on the scene via GPS/geolocation.")]
     public ARLocationManagerEntry[] objects;
-
+    public Toggle toggle;
     /// <summary>
     /// The ar session reset distance.
     /// </summary>
@@ -192,6 +193,28 @@ public class ARLocationManager : Singleton<ARLocationManager>
         return entries[id];
     }
 
+    public void checkToggle()
+    {
+        if (toggle.isOn)
+        {
+            foreach (var entry in entries)
+            {          
+                entry.Value.instance.transform.GetChild(0).GetComponent<SpriteRenderer>().color = new Color32(255, 255, 255, 86);
+  
+            }
+            
+
+        }
+
+        if (!toggle.isOn)
+        {
+            foreach (var entry in entries)
+            {
+                entry.Value.instance.transform.GetChild(0).GetComponent<SpriteRenderer>().color = new Color32(255, 255, 255, 255);
+            }
+
+        }
+    }
     /// <summary>
     /// Ons the object added.
     /// </summary>

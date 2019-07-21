@@ -239,7 +239,7 @@ b2e7e5f03edd90c79d1fac2753059d82 Assembly-CSharp.dll:.POICONVENIENCE
 71bb6a6b6c8f052f948db64c7dd3ca4f Unity.XR.ARFoundation.dll:UnityEngine.XR.ARFoundation.ARFaceMeshVisualizer
 e244702e0dc05782229aa524e4d757f5 Assembly-CSharp.dll:TMPro.Examples.TMP_ExampleScript_01
 19ca8aaaa23de4cced52df3c5e099e9f Assembly-CSharp.dll:.CreatePointOfInterestTextMeshes
-923a1278169ff1abbc06869be053c9b8 Assembly-CSharp.dll:.ARLocationManager
+2e48e64fdffa6e0321b2436aadc7c090 Assembly-CSharp.dll:.ARLocationManager
 e6ae40841db498b6e673877ac45ad208 UnityEngine.Networking.dll:UnityEngine.Networking.NetworkAnimator
 71bb6a6b6c8f052f948db64c7dd3ca4f UnityEngine.Networking.dll:UnityEngine.Networking.NetworkBehaviour
 1dcb82730d983b77cec736c6ef19f814 UnityEngine.Networking.dll:UnityEngine.Networking.NetworkDiscovery
@@ -294,6 +294,7 @@ b2e7e5f03edd90c79d1fac2753059d82 Assembly-CSharp.dll:.LocationPathPoint
 d251bf88db6c95a6b1aa0b69298da9ef UnityEngine.SpatialTracking.dll:UnityEngine.SpatialTracking.TrackedPoseDriver
 fe2d355deb0ca31d59a0a7cf4d141fc3 Assembly-CSharp.dll:TMPro.Examples.Benchmark04
 e1c35cdce946e9da77fe80a39c261608 Unity.XR.ARFoundation.dll:UnityEngine.XR.ARFoundation.ARSessionOrigin
+86ee090a5bc37e7d895badbd6ea3b362 Assembly-CSharp.dll:.Progressbar
 4d16cfbaa8e821a2b370e80844a0e9bc Assembly-CSharp.dll:TMPro.Examples.TextMeshSpawner
 e63944317d2f5958e31963668bb29158 Assembly-CSharp.dll:TMPro.Examples.VertexShakeB
 951d592bd11299dd5af2622d5c1ffd74 Assembly-CSharp.dll:.ARLocationPlaceGameObjectAlongPath

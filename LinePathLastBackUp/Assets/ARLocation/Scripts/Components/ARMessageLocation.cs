@@ -41,7 +41,9 @@ namespace Gps
 
         GameObject PopupMessage;
         GameObject LoadingPopup;
+      
 
+        
 
         public List<Location> locations;
 
@@ -51,6 +53,7 @@ namespace Gps
 
         public InputField Mlabel; // InputField
         public GameObject thePrefab; // 오브젝트 모양 
+      
 
 
 
@@ -90,7 +93,8 @@ namespace Gps
                         AddLocation(location);
                     }
                 }
-            });       
+            });
+         
 
         }
 
@@ -106,13 +110,18 @@ namespace Gps
             }
           
             HandleChildListener();
+
             LoadingPopup.GetComponent<Canvas>().enabled = false;
+
         }
 
         public void update()
         {
-
+            
         }
+
+   
+       
 
         public void ClickButton()
         {
@@ -208,6 +217,9 @@ namespace Gps
         {
             databaseReference.Child("ARMessages").ValueChanged += HandleValueChanged;
         }
+
+        
+        
 
 
 
