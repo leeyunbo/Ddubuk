@@ -40,6 +40,9 @@ public class Location
     [Tooltip("An optional label for the location.")]
     public string label = "";
 
+    [Tooltip("the User id")]
+    public string UID = "";
+
     /// <summary>
     /// Gets the horizontal vector.
     /// </summary>

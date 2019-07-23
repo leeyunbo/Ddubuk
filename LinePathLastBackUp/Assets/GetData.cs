@@ -58,6 +58,11 @@ public class GetData : MonoBehaviour
         PlayerPrefs.SetString("Scene", " ");
     }
 
+    public void Uid(string uid) // 유저의 Uid 받아오는 모듈
+    {
+        PlayerPrefs.SetString("Uid", uid);
+    }
+
     // Start is called before the first frame update
     void Start()
     {     

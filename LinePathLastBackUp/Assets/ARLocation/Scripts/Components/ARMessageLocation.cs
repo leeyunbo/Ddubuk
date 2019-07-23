@@ -41,7 +41,8 @@ namespace Gps
 
         GameObject PopupMessage;
         GameObject LoadingPopup;
-      
+
+        public String UID;
 
         
 
@@ -63,6 +64,7 @@ namespace Gps
         // Use this for initialization
         public void Awake()
         {
+            GetUid();
             PopupMessage = GameObject.Find("PopupMessage");
             LoadingPopup = GameObject.Find("LoadingPopup");
             PopupMessage.SetActive(false);
@@ -89,6 +91,7 @@ namespace Gps
                         location.label = Convert.ToString(item.Child("label").Value);
                         location.latitude = Convert.ToDouble(item.Child("latitude").Value);
                         location.longitude = Convert.ToDouble(item.Child("longitude").Value);
+                        location.UID = Convert.ToString(item.Child("Uid").Value);
                         locations.Add(location);
                         AddLocation(location);
                     }
@@ -108,44 +111,11 @@ namespace Gps
                 Debug.LogError("[ARFoundation+GPSLocation][PlaceAtLocations]: ARLocatedObjectsManager Component not found.");
 
             }
-          
+
             HandleChildListener();
 
             LoadingPopup.GetComponent<Canvas>().enabled = false;
 
-        }
-
-        public void update()
-        {
-            
-        }
-
-   
-       
-
-        public void ClickButton()
-        {
-            if (String.IsNullOrWhiteSpace(Mlabel.text) || Mlabel.text.Length > 60)
-            {
-                if (Mlabel.text.Length > 60)
-                {
-                    PopupMessage.transform.GetChild(1).GetComponent<Text>().text = "60자 이하로 입력해주세요.";
-                }
-                else
-                {
-                    PopupMessage.transform.GetChild(1).GetComponent<Text>().text = "메시지 내용을 입력해주세요.";
-                }
-                PopupMessage.SetActive(true);
-                return;
-            }
-            writeNewMessage(gps.Dlongitude, gps.Dlatitude, Mlabel.text);
-            Mlabel.text = "";
-        }
-
-        public void ClickPopupMessageButton()
-        {
-            PopupMessage.SetActive(false);
-            Mlabel.text = "";
         }
 
 
@@ -157,6 +127,7 @@ namespace Gps
             location.latitude = latitude;
             location.label = label;
             location.altitude = 1.0;
+            location.UID = this.UID;
             string json = JsonUtility.ToJson(location);
             databaseReference.Child("ARMessages").Child(key).SetRawJsonValueAsync(json);
             //Relocation(location);
@@ -213,13 +184,43 @@ namespace Gps
 
         }
 
-        public void HandleChildListener()
+        public void HandleChildListener() //데이터베이스에 변화(추가,삭제,변경)에 대한 리스너를 구현한 메소드
         {
             databaseReference.Child("ARMessages").ValueChanged += HandleValueChanged;
         }
 
-        
-        
+        public void GetUid() // Android 에서 넘어온 uid를 객체에 저장해주는 메소드
+        {
+            this.UID = PlayerPrefs.GetString("Uid");
+        }
+
+
+        public void ClickButton()
+        {
+            if (String.IsNullOrWhiteSpace(Mlabel.text) || Mlabel.text.Length > 60)
+            {
+                if (Mlabel.text.Length > 60)
+                {
+                    PopupMessage.transform.GetChild(1).GetComponent<Text>().text = "60자 이하로 입력해주세요.";
+                }
+                else
+                {
+                    PopupMessage.transform.GetChild(1).GetComponent<Text>().text = "메시지 내용을 입력해주세요.";
+                }
+                PopupMessage.SetActive(true);
+                return;
+            }
+            writeNewMessage(gps.Dlongitude, gps.Dlatitude, Mlabel.text);
+            Mlabel.text = "";
+        }
+
+        public void ClickPopupMessageButton()
+        {
+            PopupMessage.SetActive(false);
+            Mlabel.text = "";
+        }
+
+
 
 
 
