@@ -64,7 +64,7 @@ namespace Gps
         // Use this for initialization
         public void Awake()
         {
-            GetUid();
+            GetUid(); // 현재 유저의 Uid를 가져온 후 저장 
             PopupMessage = GameObject.Find("PopupMessage");
             LoadingPopup = GameObject.Find("LoadingPopup");
             PopupMessage.SetActive(false);
@@ -113,7 +113,6 @@ namespace Gps
             }
 
             HandleChildListener();
-
             LoadingPopup.GetComponent<Canvas>().enabled = false;
 
         }
@@ -131,11 +130,6 @@ namespace Gps
             string json = JsonUtility.ToJson(location);
             databaseReference.Child("ARMessages").Child(key).SetRawJsonValueAsync(json);
             //Relocation(location);
-        }
-
-        public void Relocation(Location location) //DB에 정보가 추가되면 다시 재위치
-        {
-            AddLocation(location);
         }
 
         public void AddLocation(Location location)
@@ -176,12 +170,10 @@ namespace Gps
                 if (cnt == locations.Count)
                 {
                     locations.Add(location);
-                    Relocation(location);
+                    AddLocation(location);
                 }
                 cnt++;
             }
-            print("value changed");
-
         }
 
         public void HandleChildListener() //데이터베이스에 변화(추가,삭제,변경)에 대한 리스너를 구현한 메소드
@@ -195,7 +187,7 @@ namespace Gps
         }
 
 
-        public void ClickButton()
+        public void ClickButton() //메시지 전송 버튼 클릭
         {
             if (String.IsNullOrWhiteSpace(Mlabel.text) || Mlabel.text.Length > 60)
             {
@@ -214,10 +206,16 @@ namespace Gps
             Mlabel.text = "";
         }
 
-        public void ClickPopupMessageButton()
+        public void ClickPopupMessageButton() //팝업 메시지 떴을 때 버튼 클릭 
         {
             PopupMessage.SetActive(false);
             Mlabel.text = "";
+        }
+
+        public void getClickObjectInform(int instanceID)
+        {
+            ARLocationManagerEntry arLocationManagerEntry = manager.GetEntry(instanceID); //여기에 instanceid를 넣어야함
+            // 이제 여기서 클릭된 오브젝트의 Location 객체를 마음껏 사용할 수 있음 
         }
 
 
