@@ -27,7 +27,7 @@ namespace Gps {
                 if (Physics.Raycast(ray, out hit))
                 {
                     text.GetComponent<Text>().text = hit.collider.gameObject.GetInstanceID().ToString();
-                    GameObject.Find("ARLocationRoot").SendMessage("getClickObjectInform", hit.transform.gameObject.GetInstanceID());
+                    GameObject.Find("ARLocationRoot").SendMessage("getClickObjectInform", hit.collider.gameObject.GetInstanceID());
                 }
 
 
