@@ -52,6 +52,7 @@ namespace Gps
         UsingGps gps;
         Location location;
 
+        public Text text;
         public InputField Mlabel; // InputField
         public GameObject thePrefab; // 오브젝트 모양 
       
@@ -126,7 +127,7 @@ namespace Gps
             location.latitude = latitude;
             location.label = label;
             location.altitude = 1.0;
-            location.UID = this.UID;
+            //location.UID = this.UID;
             string json = JsonUtility.ToJson(location);
             databaseReference.Child("ARMessages").Child(key).SetRawJsonValueAsync(json);
             //Relocation(location);
@@ -214,8 +215,11 @@ namespace Gps
 
         public void getClickObjectInform(int instanceID)
         {
+            
             ARLocationManagerEntry arLocationManagerEntry = manager.GetEntry(instanceID); //여기에 instanceid를 넣어야함
             // 이제 여기서 클릭된 오브젝트의 Location 객체를 마음껏 사용할 수 있음 
+            text.GetComponent<Text>().text = arLocationManagerEntry.location.label;
+
         }
 
 

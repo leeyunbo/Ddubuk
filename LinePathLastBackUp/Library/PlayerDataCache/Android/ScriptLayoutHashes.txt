@@ -2,7 +2,7 @@ Android
 PlayerPath?
 C:/Users/serve/Desktop/Desigtest.apk
 SceneListBegin?
-Assets/ARLocation/ARScene/TouchEvent.unity
+Assets/ARLocation/ARScene/AR Message.unity
 SceneListEnd?
 71bb6a6b6c8f052f948db64c7dd3ca4f Assembly-CSharp.dll:.FollowCameraPosition
 984dcc0ba3707b7691fbdca8ff508d28 Unity.TextMeshPro.dll:TMPro.TMP_SelectionCaret
@@ -135,7 +135,7 @@ e8733e39efa851172df1c9eaef062265 Unity.XR.ARFoundation.dll:UnityEngine.XR.ARFoun
 e3cdd50672d3d0ee09ffbf032a59ca45 Assembly-CSharp.dll:.POIRESTAURANT
 e6f0efd0e20669d577e9d21526b3d3f9 Assembly-CSharp.dll:TMPro.Examples.WarpTextExample
 8e98a9a0d7a414d3c676f145a97716d3 Assembly-CSharp.dll:.ARLocationConfig
-7ce3abf809a4aa079964deea4500315b Assembly-CSharp.dll:.TouchEvent
+4ce15e99c635d2567873d27549d1f16f Assembly-CSharp.dll:Gps.TouchEvent
 0756f30b0916fc442e1e0b8dae2ce999 Assembly-CSharp.dll:.SmoothMove
 dd7520b7d4e690e8c593273e7b9fbe80 Assembly-CSharp.dll:TMPro.Examples.TMP_TextEventCheck
 94017dcc9f00fe671ea7dc427b4da011 Unity.TextMeshPro.dll:TMPro.TMP_SpriteAsset
@@ -144,7 +144,7 @@ dd7520b7d4e690e8c593273e7b9fbe80 Assembly-CSharp.dll:TMPro.Examples.TMP_TextEven
 365010cc7767b44d245a480cd5c04801 Assembly-CSharp.dll:.LocationPath
 47930f3b40e24ef5b3b5e3d9ada7097a Assembly-CSharp.dll:TMPro.Examples.Benchmark01
 84a8992044c9d93a95ba9320eeabf58d Assembly-CSharp.dll:.ARLocationMoveAlongPath
-e1a8fceaa690aa3f59ef98af15f968f7 Assembly-CSharp.dll:Gps.ARMessageLocation
+d15e0fcc8c75ffae33db88ed0a4a4c0c Assembly-CSharp.dll:Gps.ARMessageLocation
 0077fc8e4fbae67f80e80ebd534de5a0 Vuforia.UnityExtensions.dll:Vuforia.AnchorBehaviour
 f8b139fcde9fda6214245df246415cc7 Vuforia.UnityExtensions.dll:Vuforia.AnchorInputListenerBehaviour
 0077fc8e4fbae67f80e80ebd534de5a0 Vuforia.UnityExtensions.dll:Vuforia.AnchorStageBehaviour
