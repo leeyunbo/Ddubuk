@@ -10,12 +10,8 @@ namespace Gps {
         private RaycastHit hit;
         public Text text;
 
-
-
-
         // Start is called before the first frame update
         
-
 
         // Update is called once per frame
         void Update()
@@ -24,17 +20,13 @@ namespace Gps {
             {
                 ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-                if (Physics.Raycast(ray, out hit))
+                if (Physics.Raycast(ray, out hit, Mathf.Infinity))
                 {
                     text.GetComponent<Text>().text = hit.collider.gameObject.GetInstanceID().ToString();
-                    GameObject.Find("ARLocationRoot").SendMessage("getClickObjectInform", hit.collider.gameObject.GetInstanceID());
+                    GameObject.Find("ARLocationRoot").SendMessage("getClickObjectInform", Mathf.Abs(hit.collider.gameObject.GetInstanceID()));
                 }
 
-
             }
-
-
-
         }
     }
 }
