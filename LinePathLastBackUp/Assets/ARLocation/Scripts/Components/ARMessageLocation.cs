@@ -41,8 +41,10 @@ namespace Gps
 
         GameObject PopupMessage;
         GameObject LoadingPopup;
+        public Button goodButton;
 
-        public String UID;
+        String UID;
+        ARLocationManagerEntry ClickMessageInform;
 
         
 
@@ -69,6 +71,8 @@ namespace Gps
             PopupMessage = GameObject.Find("PopupMessage");
             LoadingPopup = GameObject.Find("LoadingPopup");
             PopupMessage.SetActive(false);
+
+            
             gps = GameObject.Find("GpsMachine").GetComponent<UsingGps>();
 
             firebaseApp = FirebaseDatabase.DefaultInstance.App;
@@ -131,6 +135,11 @@ namespace Gps
             string json = JsonUtility.ToJson(location);
             databaseReference.Child("ARMessages").Child(key).SetRawJsonValueAsync(json);
             //Relocation(location);
+        }
+
+        public void UpdateMessage(ARLocationManagerEntry aRLocationManagerEntry)
+        {
+
         }
 
         public void AddLocation(Location location)
@@ -215,11 +224,26 @@ namespace Gps
 
         public void getClickObjectInform(int instanceID)
         {
-            
-            ARLocationManagerEntry arLocationManagerEntry = manager.GetEntry(instanceID); //여기에 instanceid를 넣어야함
-            // 이제 여기서 클릭된 오브젝트의 Location 객체를 마음껏 사용할 수 있음 
-            text.GetComponent<Text>().text = arLocationManagerEntry.location.label;
+            ClickMessageInform = manager.GetEntry(instanceID); //여기에 instanceid를 넣어야함
+            // 이제 여기서 클릭된 오브젝트의 Location 객체를 마음껏 사용할 수 있음                
+        }
 
+        public void ClickGoodButton()
+        {
+            if(isClickChecked())
+            {
+                ClickMessageInform.location.GCount = ClickMessageInform.location.GCount + 1;
+            }
+            else
+            {
+                ClickMessageInform.location.GCount = ClickMessageInform.location.GCount - 1;
+            }
+        }
+
+        public bool isClickChecked()
+        {
+            bool isClick = ClickMessageInform.location.isClickUID.Contains(this.UID);
+            return isClick;
         }
 
 

@@ -8,22 +8,27 @@ namespace Gps {
     {
         private Ray ray;
         private RaycastHit hit;
-        public Text text;
+        private GameObject gameObject;
+        GameObject goodPopup;
 
-        // Start is called before the first frame update
-        
+        void Awake()
+        {
+            goodPopup = GameObject.Find("goodPopup");
+            goodPopup.SetActive(false);
+            gameObject = GameObject.Find("ARSession Origin");
+        }
 
-        // Update is called once per frame
         void Update()
         {
             if (Input.GetMouseButtonDown(0))
             {
                 ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-                if (Physics.Raycast(ray, out hit, Mathf.Infinity))
+                if (Physics.Raycast(ray, out hit, Mathf.Infinity) && hit.collider.gameObject != null)
                 {
-                    text.GetComponent<Text>().text = hit.collider.gameObject.GetInstanceID().ToString();
-                    GameObject.Find("ARLocationRoot").SendMessage("getClickObjectInform", Mathf.Abs(hit.collider.gameObject.GetInstanceID()));
+                    goodPopup.SetActive(true);
+                    gameObject.transform.GetChild(1).SendMessage("getClickObjectInform", Mathf.Abs(hit.collider.gameObject.GetInstanceID())); 
+                    
                 }
 
             }

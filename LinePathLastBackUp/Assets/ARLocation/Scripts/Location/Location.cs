@@ -40,8 +40,14 @@ public class Location
     [Tooltip("An optional label for the location.")]
     public string label = "";
 
-    [Tooltip("the User id")]
+    [Tooltip("메시지를 남긴 사람의 UID")]
     public string UID = "";
+
+    [Tooltip("좋아요 누른 사람들 UID 리스트")]
+    public List<String> isClickUID;
+
+    [Tooltip("좋아요 횟수")]
+    public int GCount;
 
     /// <summary>
     /// Gets the horizontal vector.
