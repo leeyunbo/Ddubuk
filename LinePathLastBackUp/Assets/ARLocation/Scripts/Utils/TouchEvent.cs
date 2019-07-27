@@ -9,12 +9,9 @@ namespace Gps {
         private Ray ray;
         private RaycastHit hit;
         private GameObject gameObject;
-        GameObject goodPopup;
 
         void Awake()
         {
-            goodPopup = GameObject.Find("goodPopup");
-            goodPopup.SetActive(false);
             gameObject = GameObject.Find("ARSession Origin");
         }
 
@@ -26,7 +23,6 @@ namespace Gps {
 
                 if (Physics.Raycast(ray, out hit, Mathf.Infinity) && hit.collider.gameObject != null)
                 {
-                    goodPopup.SetActive(true);
                     gameObject.transform.GetChild(1).SendMessage("getClickObjectInform", Mathf.Abs(hit.collider.gameObject.GetInstanceID())); 
                     
                 }

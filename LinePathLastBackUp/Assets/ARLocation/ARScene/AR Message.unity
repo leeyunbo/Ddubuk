@@ -151,7 +151,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.0000019073, y: -238}
+  m_AnchoredPosition: {x: 0, y: -238}
   m_SizeDelta: {x: -284.7, y: -1368.8}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &46587432
@@ -2385,6 +2385,7 @@ MonoBehaviour:
     UID: 
     isClickUID: []
     GCount: 0
+    key: 
   MaxWaitTime: 200
 --- !u!4 &1472189517
 Transform:
@@ -2961,8 +2962,6 @@ MonoBehaviour:
   isHeightRelative: 1
   showDebugInfoPanel: 0
   movementSmoothingFactor: 100
-  goodButton: {fileID: 0}
-  UID: 
   locations: []
   text: {fileID: 0}
   Mlabel: {fileID: 739029830}

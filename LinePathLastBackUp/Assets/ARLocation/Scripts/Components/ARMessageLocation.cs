@@ -41,7 +41,7 @@ namespace Gps
 
         GameObject PopupMessage;
         GameObject LoadingPopup;
-        public Button goodButton;
+        GameObject goodPopup;
 
         String UID;
         ARLocationManagerEntry ClickMessageInform;
@@ -68,9 +68,11 @@ namespace Gps
         public void Awake()
         {
             GetUid(); // 현재 유저의 Uid를 가져온 후 저장 
+            goodPopup = GameObject.Find("goodPopup");
             PopupMessage = GameObject.Find("PopupMessage");
             LoadingPopup = GameObject.Find("LoadingPopup");
             PopupMessage.SetActive(false);
+            goodPopup.SetActive(false);
 
             
             gps = GameObject.Find("GpsMachine").GetComponent<UsingGps>();
@@ -91,12 +93,13 @@ namespace Gps
                     foreach (var item in snapshot.Children)
                     {
                         Location location = new Location();
+                        location.key = Convert.ToString(item.Child("key").Value);
                         location.altitude = Convert.ToDouble(item.Child("altitude").Value);
                         location.ignoreAltitude = Convert.ToBoolean(item.Child("ignoreAltitude").Value);
                         location.label = Convert.ToString(item.Child("label").Value);
                         location.latitude = Convert.ToDouble(item.Child("latitude").Value);
                         location.longitude = Convert.ToDouble(item.Child("longitude").Value);
-                        location.UID = Convert.ToString(item.Child("Uid").Value);
+                        location.UID = Convert.ToString(item.Child("Uid").Value);                     
                         locations.Add(location);
                         AddLocation(location);
                     }
@@ -127,11 +130,13 @@ namespace Gps
         {
             string key = databaseReference.Child("ARMessages").Push().Key;
             Location location = new Location();
-            location.longitude = longitude;
-            location.latitude = latitude;
-            location.label = label;
-            location.altitude = 1.0;
-            //location.UID = this.UID;
+            location.UID = this.UID; // 메시지 올린사람 UID
+            location.key = key; // 메시지 DB key
+            location.longitude = longitude; //longitude
+            location.latitude = latitude; //latitude
+            location.label = label; //메시지 내용
+            location.altitude = 1.0; // altitude
+            location.GCount = 0; //좋아요 수 
             string json = JsonUtility.ToJson(location);
             databaseReference.Child("ARMessages").Child(key).SetRawJsonValueAsync(json);
             //Relocation(location);
@@ -139,7 +144,9 @@ namespace Gps
 
         public void UpdateMessage(ARLocationManagerEntry aRLocationManagerEntry)
         {
-
+            Location location = aRLocationManagerEntry.location;
+            string json = JsonUtility.ToJson(location);
+            databaseReference.Child("ARMessages").Child(location.key).SetRawJsonValueAsync(json);
         }
 
         public void AddLocation(Location location)
@@ -224,6 +231,7 @@ namespace Gps
 
         public void getClickObjectInform(int instanceID)
         {
+            goodPopup.SetActive(true);
             ClickMessageInform = manager.GetEntry(instanceID); //여기에 instanceid를 넣어야함
             // 이제 여기서 클릭된 오브젝트의 Location 객체를 마음껏 사용할 수 있음                
         }
@@ -238,6 +246,13 @@ namespace Gps
             {
                 ClickMessageInform.location.GCount = ClickMessageInform.location.GCount - 1;
             }
+
+            UpdateMessage(ClickMessageInform); // 메시지 정보 DB업데이트
+        }
+
+        public void ClickCancelButton()
+        {
+            goodPopup.SetActive(false);
         }
 
         public bool isClickChecked()

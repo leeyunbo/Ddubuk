@@ -49,6 +49,9 @@ public class Location
     [Tooltip("좋아요 횟수")]
     public int GCount;
 
+    [Tooltip("키")]
+    public String key;
+
     /// <summary>
     /// Gets the horizontal vector.
     /// </summary>
