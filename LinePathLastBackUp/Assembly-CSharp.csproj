@@ -118,6 +118,7 @@
     <Compile Include="Assets\ARLocation\Scripts\Utils\Singleton.cs" />
     <Compile Include="Assets\ARLocation\Scripts\Utils\SmoothMove.cs" />
     <Compile Include="Assets\ARLocation\Scripts\Utils\TouchEvent.cs" />
+    <Compile Include="Assets\ARLocation\Scripts\Utils\UserInformation.cs" />
     <Compile Include="Assets\ARLocation\Scripts\Utils\Utils.cs" />
     <Compile Include="Assets\Back.cs" />
     <Compile Include="Assets\Btn_Event.cs" />

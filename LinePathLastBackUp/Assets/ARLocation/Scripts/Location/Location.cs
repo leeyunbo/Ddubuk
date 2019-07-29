@@ -44,7 +44,7 @@ public class Location
     public string UID = "";
 
     [Tooltip("좋아요 누른 사람들 UID 리스트")]
-    public List<String> isClickUID;
+    public List<String> isClickUID = new List<string>();
 
     [Tooltip("좋아요 횟수")]
     public int GCount;

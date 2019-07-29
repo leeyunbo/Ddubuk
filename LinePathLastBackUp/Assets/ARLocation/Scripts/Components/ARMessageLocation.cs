@@ -45,6 +45,7 @@ namespace Gps
 
         String UID;
         ARLocationManagerEntry ClickMessageInform;
+        UserInformation UserInformation;
 
         
 
@@ -99,7 +100,11 @@ namespace Gps
                         location.label = Convert.ToString(item.Child("label").Value);
                         location.latitude = Convert.ToDouble(item.Child("latitude").Value);
                         location.longitude = Convert.ToDouble(item.Child("longitude").Value);
-                        location.UID = Convert.ToString(item.Child("Uid").Value);                     
+                        location.UID = Convert.ToString(item.Child("Uid").Value);
+                        foreach (var clickuid in item.Child("isClickUID").Children)
+                        {
+                            location.isClickUID.Add(Convert.ToString(clickuid.Key));
+                        }
                         locations.Add(location);
                         AddLocation(location);
                     }
@@ -136,7 +141,6 @@ namespace Gps
             location.latitude = latitude; //latitude
             location.label = label; //메시지 내용
             location.altitude = 1.0; // altitude
-            location.GCount = 0; //좋아요 수 
             string json = JsonUtility.ToJson(location);
             databaseReference.Child("ARMessages").Child(key).SetRawJsonValueAsync(json);
             //Relocation(location);
@@ -145,14 +149,26 @@ namespace Gps
         public void UpdateMessage(ARLocationManagerEntry aRLocationManagerEntry)
         {
             Location location = aRLocationManagerEntry.location;
-            string json = JsonUtility.ToJson(location);
-            databaseReference.Child("ARMessages").Child(location.key).SetRawJsonValueAsync(json);
+            location.key = aRLocationManagerEntry.location.key;
+            foreach (String clickuid in location.isClickUID)
+            {
+                UserInformation userInformation = new UserInformation(location.key);
+                string json = JsonUtility.ToJson(userInformation);
+                databaseReference.Child("ARMessages").Child(location.key).Child("isClickUID").SetRawJsonValueAsync(json);
+            }
+        }
+
+        private void ARMessageLocation_ValueChanged(object sender, ValueChangedEventArgs e)
+        {
+            throw new NotImplementedException();
         }
 
         public void AddLocation(Location location)
         {
             GameObject Prefab = thePrefab;
             Prefab.GetComponentInChildren<Text>().text = location.label;
+            //Prefab.transform.GetChild(0).Find("goodText").GetComponent<Text>().text = Convert.ToString(location.isClickUID.Count);
+
 
             manager.Add(new ARLocationManagerEntry
             {
@@ -201,6 +217,7 @@ namespace Gps
         public void GetUid() // Android 에서 넘어온 uid를 객체에 저장해주는 메소드
         {
             this.UID = PlayerPrefs.GetString("Uid");
+            UserInformation = new UserInformation(this.UID); //유저 정보 저장 
         }
 
 
@@ -232,7 +249,7 @@ namespace Gps
         public void getClickObjectInform(int instanceID)
         {
             goodPopup.SetActive(true);
-            ClickMessageInform = manager.GetEntry(instanceID); //여기에 instanceid를 넣어야함
+            ClickMessageInform = manager.GetEntry(instanceID); // 현재 클릭한 오브젝트의 정보 저장 
             // 이제 여기서 클릭된 오브젝트의 Location 객체를 마음껏 사용할 수 있음                
         }
 
@@ -240,11 +257,11 @@ namespace Gps
         {
             if(isClickChecked())
             {
-                ClickMessageInform.location.GCount = ClickMessageInform.location.GCount + 1;
+                ClickMessageInform.location.isClickUID.Add(this.UID);
             }
             else
             {
-                ClickMessageInform.location.GCount = ClickMessageInform.location.GCount - 1;
+                ClickMessageInform.location.isClickUID.Remove(this.UID);             
             }
 
             UpdateMessage(ClickMessageInform); // 메시지 정보 DB업데이트
