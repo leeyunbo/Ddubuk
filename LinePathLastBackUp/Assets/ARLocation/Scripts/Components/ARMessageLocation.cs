@@ -46,8 +46,10 @@ namespace Gps
         String UID;
         ARLocationManagerEntry ClickMessageInform;
         UserInformation UserInformation;
+        private Ray ray;
+        private RaycastHit hit;
 
-        
+
 
         public List<Location> locations;
 
@@ -69,6 +71,7 @@ namespace Gps
         public void Awake()
         {
             GetUid(); // 현재 유저의 Uid를 가져온 후 저장 
+            this.UID = "0aqhKGhuyxeSVRomlALyxVnyYRx2";
             goodPopup = GameObject.Find("goodPopup");
             PopupMessage = GameObject.Find("PopupMessage");
             LoadingPopup = GameObject.Find("LoadingPopup");
@@ -118,7 +121,7 @@ namespace Gps
         {
             yield return new WaitForSeconds(0.5f);
             manager = ARLocationManager.Instance;
-
+            
             if (manager == null)
             {
                 Debug.LogError("[ARFoundation+GPSLocation][PlaceAtLocations]: ARLocatedObjectsManager Component not found.");
@@ -127,7 +130,26 @@ namespace Gps
 
             HandleChildListener();
             LoadingPopup.GetComponent<Canvas>().enabled = false;
+            
 
+        }
+
+        void Update()
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+                if (Physics.Raycast(ray, out hit, Mathf.Infinity))
+                {
+                    print(hit.collider.gameObject.GetInstanceID());
+                    if (hit.collider.gameObject == manager.GetEntry(hit.collider.gameObject.GetInstanceID()).instance)
+                    {
+                        getClickObjectInform(Mathf.Abs(hit.collider.gameObject.GetInstanceID()));
+                    }
+
+                }
+            }
         }
 
 
@@ -146,15 +168,14 @@ namespace Gps
             //Relocation(location);
         }
 
-        public void UpdateMessage(ARLocationManagerEntry aRLocationManagerEntry)
+        public void UpdateOnClickUID(ARLocationManagerEntry aRLocationManagerEntry)
         {
-            Location location = aRLocationManagerEntry.location;
-            location.key = aRLocationManagerEntry.location.key;
+            Location location = aRLocationManagerEntry.location;  
             foreach (String clickuid in location.isClickUID)
             {
                 UserInformation userInformation = new UserInformation(location.key);
                 string json = JsonUtility.ToJson(userInformation);
-                databaseReference.Child("ARMessages").Child(location.key).Child("isClickUID").SetRawJsonValueAsync(json);
+                databaseReference.Child("ARMessages").Child(location.key).Child("isClickUID").Child(clickuid).SetRawJsonValueAsync(json);
             }
         }
 
@@ -246,25 +267,25 @@ namespace Gps
             Mlabel.text = "";
         }
 
-        public void getClickObjectInform(int instanceID)
+        public void getClickObjectInform(int instanceID) //오브젝트를 눌렀어.
         {
-            goodPopup.SetActive(true);
+            goodPopup.SetActive(true); //좋아요 팝업이 등장
             ClickMessageInform = manager.GetEntry(instanceID); // 현재 클릭한 오브젝트의 정보 저장 
             // 이제 여기서 클릭된 오브젝트의 Location 객체를 마음껏 사용할 수 있음                
         }
 
-        public void ClickGoodButton()
+        public void ClickGoodButton() //좋아요 버튼을 사용자가 눌렀어.
         {
-            if(isClickChecked())
+            if(!isClickChecked()) //만약에 누른사람이 아니라면 
             {
-                ClickMessageInform.location.isClickUID.Add(this.UID);
+                ClickMessageInform.location.isClickUID.Add(this.UID); //추가해, UID를
             }
-            else
+            else //만약 누른 사람이라면
             {
-                ClickMessageInform.location.isClickUID.Remove(this.UID);             
+                ClickMessageInform.location.isClickUID.Remove(this.UID); // 제거해, UID를             
             }
-
-            UpdateMessage(ClickMessageInform); // 메시지 정보 DB업데이트
+            ClickMessageInform.instance.transform.GetChild(0).Find("goodText").GetComponent<Text>().text = Convert.ToString(location.isClickUID.Count); //좋아요 횟수 업데이트
+            UpdateOnClickUID(ClickMessageInform); //클릭한 사람 정보 DB 업데이트
         }
 
         public void ClickCancelButton()

@@ -37,7 +37,7 @@ public class ARLocationObjectOptions
     /// If true, will clone the object when placing it on the scene.
     /// </summary>
     [Tooltip("If true, will clone the object when placing it on the scene.")]
-    public bool createInstance;
+    public bool createInstance = true;
 
     /// <summary>
     /// The smoothing factor for movement due to GPS location adjustments; if set to zero it is disabled.
@@ -260,8 +260,11 @@ public class ARLocationManager : Singleton<ARLocationManager>
         {
             var instance = Instantiate(entry.instance, transform);
             entry.instance = instance;
-            id = instance.transform.GetInstanceID();
+            id = Mathf.Abs(instance.transform.GetInstanceID());
+            print(id);
             entries.Add(id, entry);
+            print(GetEntry(id));
+            print(entries);
         }
         else
         {
