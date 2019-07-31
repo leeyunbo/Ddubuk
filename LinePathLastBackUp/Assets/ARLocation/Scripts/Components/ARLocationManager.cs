@@ -133,7 +133,7 @@ public class ARLocationManager : Singleton<ARLocationManager>
     /// </summary>
     public delegate void OnStartDelegate();
 
-    Dictionary<int, ARLocationManagerEntry> entries = new Dictionary<int, ARLocationManagerEntry>();
+    public Dictionary<int, ARLocationManagerEntry> entries = new Dictionary<int, ARLocationManagerEntry>();
 
     OnObjectAddedDelegate onObjectAddedDelegates;
 
@@ -261,10 +261,7 @@ public class ARLocationManager : Singleton<ARLocationManager>
             var instance = Instantiate(entry.instance, transform);
             entry.instance = instance;
             id = Mathf.Abs(instance.transform.GetInstanceID());
-            print(id);
             entries.Add(id, entry);
-            print(GetEntry(id));
-            print(entries);
         }
         else
         {

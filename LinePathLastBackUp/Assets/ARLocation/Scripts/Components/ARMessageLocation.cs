@@ -39,6 +39,8 @@ namespace Gps
         [Tooltip("The smoothing factor for movement due to GPS location adjustments; if set to zero it is disabled."), Range(0, 500)]
         public float movementSmoothingFactor = 120f;
 
+        public Dictionary<int, ARLocationManagerEntry> entries = new Dictionary<int, ARLocationManagerEntry>();
+
         GameObject PopupMessage;
         GameObject LoadingPopup;
         GameObject goodPopup;
@@ -70,11 +72,13 @@ namespace Gps
         // Use this for initialization
         public void Awake()
         {
+
             GetUid(); // 현재 유저의 Uid를 가져온 후 저장 
             this.UID = "0aqhKGhuyxeSVRomlALyxVnyYRx2";
             goodPopup = GameObject.Find("goodPopup");
             PopupMessage = GameObject.Find("PopupMessage");
             LoadingPopup = GameObject.Find("LoadingPopup");
+            manager = ARLocationManager.Instance;
             PopupMessage.SetActive(false);
             goodPopup.SetActive(false);
 
@@ -114,13 +118,13 @@ namespace Gps
                 }
             });
          
+         
 
         }
 
         IEnumerator Start()
         {
             yield return new WaitForSeconds(0.5f);
-            manager = ARLocationManager.Instance;
             
             if (manager == null)
             {
@@ -128,10 +132,9 @@ namespace Gps
 
             }
 
-            HandleChildListener();
-            LoadingPopup.GetComponent<Canvas>().enabled = false;
-            
-
+            HandleChildListener();           
+            LoadingPopup.GetComponent<Canvas>().enabled = false;         
+           
         }
 
         void Update()
@@ -142,14 +145,23 @@ namespace Gps
 
                 if (Physics.Raycast(ray, out hit, Mathf.Infinity))
                 {
-                    print(hit.collider.gameObject.GetInstanceID());
-                    if (hit.collider.gameObject == manager.GetEntry(hit.collider.gameObject.GetInstanceID()).instance)
+                    int id = Mathf.Abs(hit.collider.gameObject.GetInstanceID());
+
+                    if (hit.collider.gameObject.Equals(manager.GetEntry(id).instance))
                     {
-                        getClickObjectInform(Mathf.Abs(hit.collider.gameObject.GetInstanceID()));
+                        getClickObjectInform(id);
                     }
 
                 }
             }
+
+            /*
+            foreach(KeyValuePair<int,ARLocationManagerEntry> items in manager.entries)
+            {
+                print( "Key" + items.Key + "Value" + items.Value);
+            }*/
+
+           
         }
 
 
@@ -186,7 +198,7 @@ namespace Gps
 
         public void AddLocation(Location location)
         {
-            GameObject Prefab = thePrefab;
+            GameObject Prefab = thePrefab;           
             Prefab.GetComponentInChildren<Text>().text = location.label;
             //Prefab.transform.GetChild(0).Find("goodText").GetComponent<Text>().text = Convert.ToString(location.isClickUID.Count);
 
@@ -203,7 +215,11 @@ namespace Gps
                     createInstance = true,
                 }
             });
+
+
+            
         }
+
 
         void HandleValueChanged(object sender, ValueChangedEventArgs args)
         {
@@ -270,7 +286,7 @@ namespace Gps
         public void getClickObjectInform(int instanceID) //오브젝트를 눌렀어.
         {
             goodPopup.SetActive(true); //좋아요 팝업이 등장
-            ClickMessageInform = manager.GetEntry(instanceID); // 현재 클릭한 오브젝트의 정보 저장 
+            ClickMessageInform = manager.entries[instanceID]; // 현재 클릭한 오브젝트의 정보 저장 
             // 이제 여기서 클릭된 오브젝트의 Location 객체를 마음껏 사용할 수 있음                
         }
 

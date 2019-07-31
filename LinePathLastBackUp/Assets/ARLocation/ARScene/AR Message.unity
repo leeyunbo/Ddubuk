@@ -2906,7 +2906,7 @@ MonoBehaviour:
   averageCount: 10
   measureOnlyAtStartup: 1
   useRawUntilFirstAverage: 0
-  noSmoothingBeforeFirstAverage: 1
+  noSmoothingBeforeFirstAverage: 0
   smoothing: 100
   TrueNorthCalibrationOffset: 0
 --- !u!114 &1921656430
