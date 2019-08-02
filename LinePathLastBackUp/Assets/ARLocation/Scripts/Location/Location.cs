@@ -41,7 +41,7 @@ public class Location
     public string label = "";
 
     [Tooltip("메시지를 남긴 사람의 UID")]
-    public string UID = "";
+    public string uid = "";
 
     [Tooltip("좋아요 누른 사람들 UID 리스트")]
     public List<String> isClickUID = new List<string>();

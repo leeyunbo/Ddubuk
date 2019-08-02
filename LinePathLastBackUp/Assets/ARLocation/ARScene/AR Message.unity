@@ -2011,7 +2011,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 400.00006, y: 799.99994}
+  m_AnchoredPosition: {x: 2030, y: 768}
   m_SizeDelta: {x: 800, y: 1600}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &1303446771
@@ -2361,7 +2361,7 @@ MonoBehaviour:
     altitude: 0
     ignoreAltitude: 0
     label: 
-    UID: 
+    uid: 
     isClickUID: []
     GCount: 0
     key: 

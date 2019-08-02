@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using Firebase;
 using Firebase.Database;
 using Firebase.Unity.Editor;
+using UnityEngine.EventSystems;
 using System;
 using Gps;
 using System.Threading;
@@ -73,7 +74,7 @@ namespace Gps
         public void Awake()
         {
 
-            GetUid(); // 현재 유저의 Uid를 가져온 후 저장 
+            //GetUid(); // 현재 유저의 Uid를 가져온 후 저장 
             this.UID = "0aqhKGhuyxeSVRomlALyxVnyYRx2";
             goodPopup = GameObject.Find("goodPopup");
             PopupMessage = GameObject.Find("PopupMessage");
@@ -107,7 +108,7 @@ namespace Gps
                         location.label = Convert.ToString(item.Child("label").Value);
                         location.latitude = Convert.ToDouble(item.Child("latitude").Value);
                         location.longitude = Convert.ToDouble(item.Child("longitude").Value);
-                        location.UID = Convert.ToString(item.Child("Uid").Value);
+                        location.uid = Convert.ToString(item.Child("uid").Value);
                         foreach (var clickuid in item.Child("isClickUID").Children)
                         {
                             location.isClickUID.Add(Convert.ToString(clickuid.Key));
@@ -143,25 +144,16 @@ namespace Gps
             {
                 ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-                if (Physics.Raycast(ray, out hit, Mathf.Infinity))
+                if (Physics.Raycast(ray, out hit, Mathf.Infinity) && EventSystem.current.IsPointerOverGameObject() == false) 
                 {
-                    int id = Mathf.Abs(hit.collider.gameObject.GetInstanceID());
-
-                    if (hit.collider.gameObject.Equals(manager.GetEntry(id).instance))
+                    int id = Mathf.Abs(hit.collider.gameObject.GetInstanceID()) + 2;
+                    if (id == (Mathf.Abs(manager.GetEntry(id).instance.GetInstanceID()) + 2))
                     {
                         getClickObjectInform(id);
                     }
 
                 }
             }
-
-            /*
-            foreach(KeyValuePair<int,ARLocationManagerEntry> items in manager.entries)
-            {
-                print( "Key" + items.Key + "Value" + items.Value);
-            }*/
-
-           
         }
 
 
@@ -169,7 +161,7 @@ namespace Gps
         {
             string key = databaseReference.Child("ARMessages").Push().Key;
             Location location = new Location();
-            location.UID = this.UID; // 메시지 올린사람 UID
+            location.uid = this.UID; // 메시지 올린사람 UID
             location.key = key; // 메시지 DB key
             location.longitude = longitude; //longitude
             location.latitude = latitude; //latitude
@@ -185,7 +177,7 @@ namespace Gps
             Location location = aRLocationManagerEntry.location;  
             foreach (String clickuid in location.isClickUID)
             {
-                UserInformation userInformation = new UserInformation(location.key);
+                UserInformation userInformation = new UserInformation(clickuid);
                 string json = JsonUtility.ToJson(userInformation);
                 databaseReference.Child("ARMessages").Child(location.key).Child("isClickUID").Child(clickuid).SetRawJsonValueAsync(json);
             }
@@ -286,12 +278,14 @@ namespace Gps
         public void getClickObjectInform(int instanceID) //오브젝트를 눌렀어.
         {
             goodPopup.SetActive(true); //좋아요 팝업이 등장
-            ClickMessageInform = manager.entries[instanceID]; // 현재 클릭한 오브젝트의 정보 저장 
+            this.ClickMessageInform = manager.GetEntry(instanceID); // 현재 클릭한 오브젝트의 정보 저장 
             // 이제 여기서 클릭된 오브젝트의 Location 객체를 마음껏 사용할 수 있음                
         }
 
         public void ClickGoodButton() //좋아요 버튼을 사용자가 눌렀어.
         {
+            ClickMessageInform.location.isClickUID.Add(this.UID);
+            /*
             if(!isClickChecked()) //만약에 누른사람이 아니라면 
             {
                 ClickMessageInform.location.isClickUID.Add(this.UID); //추가해, UID를
@@ -299,7 +293,7 @@ namespace Gps
             else //만약 누른 사람이라면
             {
                 ClickMessageInform.location.isClickUID.Remove(this.UID); // 제거해, UID를             
-            }
+            }*/
             ClickMessageInform.instance.transform.GetChild(0).Find("goodText").GetComponent<Text>().text = Convert.ToString(location.isClickUID.Count); //좋아요 횟수 업데이트
             UpdateOnClickUID(ClickMessageInform); //클릭한 사람 정보 DB 업데이트
         }
