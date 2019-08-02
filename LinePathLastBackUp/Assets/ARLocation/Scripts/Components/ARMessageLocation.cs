@@ -169,13 +169,27 @@ namespace Gps
             location.altitude = 1.0; // altitude
             string json = JsonUtility.ToJson(location);
             databaseReference.Child("ARMessages").Child(key).SetRawJsonValueAsync(json);
-            //Relocation(location);
+            //TestUpdateOnClickUID(location);
+            AddLocation(location);
         }
 
         public void UpdateOnClickUID(ARLocationManagerEntry aRLocationManagerEntry)
         {
             Location location = aRLocationManagerEntry.location;  
             foreach (String clickuid in location.isClickUID)
+            {
+                UserInformation userInformation = new UserInformation(clickuid);
+                string json = JsonUtility.ToJson(userInformation);
+                databaseReference.Child("ARMessages").Child(location.key).Child("isClickUID").Child(clickuid).SetRawJsonValueAsync(json);
+            } 
+       
+        }
+
+        public void TestUpdateOnClickUID(Location location)
+        {
+            location.isClickUID.Add(this.UID);
+
+            foreach( String clickuid in location.isClickUID)
             {
                 UserInformation userInformation = new UserInformation(clickuid);
                 string json = JsonUtility.ToJson(userInformation);
@@ -206,10 +220,7 @@ namespace Gps
                     movementSmoothingFactor = movementSmoothingFactor,
                     createInstance = true,
                 }
-            });
-
-
-            
+            });            
         }
 
 
@@ -293,8 +304,7 @@ namespace Gps
             else //만약 누른 사람이라면
             {
                 ClickMessageInform.location.isClickUID.Remove(this.UID); // 제거해, UID를             
-            }*/
-            ClickMessageInform.instance.transform.GetChild(0).Find("goodText").GetComponent<Text>().text = Convert.ToString(location.isClickUID.Count); //좋아요 횟수 업데이트
+            }*/            
             UpdateOnClickUID(ClickMessageInform); //클릭한 사람 정보 DB 업데이트
         }
 
