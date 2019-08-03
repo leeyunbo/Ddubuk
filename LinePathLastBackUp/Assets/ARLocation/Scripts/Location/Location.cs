@@ -50,6 +50,9 @@ public class Location
     [Tooltip("키")]
     public String key;
 
+    [Tooltip("좋아요 수")]
+    public int likecnt;
+
     /// <summary>
     /// Gets the horizontal vector.
     /// </summary>

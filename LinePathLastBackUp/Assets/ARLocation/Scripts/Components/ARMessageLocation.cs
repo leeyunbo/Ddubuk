@@ -167,11 +167,20 @@ namespace Gps
             location.latitude = latitude; //latitude
             location.label = label; //메시지 내용
             location.altitude = 1.0; // altitude
+            location.likecnt = 0;
             string json = JsonUtility.ToJson(location);
             databaseReference.Child("ARMessages").Child(key).SetRawJsonValueAsync(json);
             //TestUpdateOnClickUID(location);
             AddLocation(location);
         }
+
+
+        public void writeUpdateMessage(Location location)
+        {
+            string json = JsonUtility.ToJson(location);
+            databaseReference.Child("ARMessages").Child(location.key).SetRawJsonValueAsync(json);
+        }
+
 
         public void UpdateOnClickUID(ARLocationManagerEntry aRLocationManagerEntry)
         {
@@ -181,21 +190,11 @@ namespace Gps
                 UserInformation userInformation = new UserInformation(clickuid);
                 string json = JsonUtility.ToJson(userInformation);
                 databaseReference.Child("ARMessages").Child(location.key).Child("isClickUID").Child(clickuid).SetRawJsonValueAsync(json);
-            } 
+            }
+            writeUpdateMessage(location);
        
         }
 
-        public void TestUpdateOnClickUID(Location location)
-        {
-            location.isClickUID.Add(this.UID);
-
-            foreach( String clickuid in location.isClickUID)
-            {
-                UserInformation userInformation = new UserInformation(clickuid);
-                string json = JsonUtility.ToJson(userInformation);
-                databaseReference.Child("ARMessages").Child(location.key).Child("isClickUID").Child(clickuid).SetRawJsonValueAsync(json);
-            }
-        }
 
         private void ARMessageLocation_ValueChanged(object sender, ValueChangedEventArgs e)
         {
@@ -294,17 +293,16 @@ namespace Gps
         }
 
         public void ClickGoodButton() //좋아요 버튼을 사용자가 눌렀어.
-        {
-            ClickMessageInform.location.isClickUID.Add(this.UID);
-            /*
-            if(!isClickChecked()) //만약에 누른사람이 아니라면 
+        {                      
+            if(isClickChecked() == false) //만약에 누른사람이 아니라면 
             {
                 ClickMessageInform.location.isClickUID.Add(this.UID); //추가해, UID를
             }
             else //만약 누른 사람이라면
             {
                 ClickMessageInform.location.isClickUID.Remove(this.UID); // 제거해, UID를             
-            }*/            
+            }
+            ClickMessageInform.location.likecnt = ClickMessageInform.location.isClickUID.Count;
             UpdateOnClickUID(ClickMessageInform); //클릭한 사람 정보 DB 업데이트
         }
 
