@@ -73,7 +73,7 @@ namespace Gps
         // Use this for initialization
         public void Awake()
         {
-
+            
             //GetUid(); // 현재 유저의 Uid를 가져온 후 저장 
             this.UID = "0aqhKGhuyxeSVRomlALyxVnyYRx2";
             goodPopup = GameObject.Find("goodPopup");
@@ -82,6 +82,7 @@ namespace Gps
             manager = ARLocationManager.Instance;
             PopupMessage.SetActive(false);
             goodPopup.SetActive(false);
+   
 
             
             gps = GameObject.Find("GpsMachine").GetComponent<UsingGps>();
@@ -111,7 +112,7 @@ namespace Gps
                         location.uid = Convert.ToString(item.Child("uid").Value);
                         foreach (var clickuid in item.Child("isClickUID").Children)
                         {
-                            location.isClickUID.Add(Convert.ToString(clickuid.Key));
+                            location.isClickUID.Add(Convert.ToString(clickuid.Value));
                         }
                         locations.Add(location);
                         AddLocation(location);
@@ -126,7 +127,6 @@ namespace Gps
         IEnumerator Start()
         {
             yield return new WaitForSeconds(0.5f);
-            
             if (manager == null)
             {
                 Debug.LogError("[ARFoundation+GPSLocation][PlaceAtLocations]: ARLocatedObjectsManager Component not found.");
@@ -205,6 +205,7 @@ namespace Gps
         {
             GameObject Prefab = thePrefab;           
             Prefab.GetComponentInChildren<Text>().text = location.label;
+            Prefab.transform.GetChild(0).GetChild(0).Find("goodText").GetComponent<Text>().text = Convert.ToString(location.likecnt);
             //Prefab.transform.GetChild(0).Find("goodText").GetComponent<Text>().text = Convert.ToString(location.isClickUID.Count);
 
 
@@ -238,12 +239,11 @@ namespace Gps
                 location.ignoreAltitude = Convert.ToBoolean(item.Child("ignoreAltitude").Value);
                 location.label = Convert.ToString(item.Child("label").Value);
                 location.latitude = Convert.ToDouble(item.Child("latitude").Value);
-                location.longitude = Convert.ToDouble(item.Child("longitude").Value);
-                if (cnt == locations.Count)
-                {
-                    locations.Add(location);
-                    AddLocation(location);
-                }
+                location.longitude = Convert.ToDouble(item.Child("longitude").Value);          
+                location.likecnt = Convert.ToInt16(item.Child("likecnt").Value);
+                
+                locations.Add(location);
+                AddLocation(location);             
                 cnt++;
             }
         }
@@ -287,8 +287,12 @@ namespace Gps
 
         public void getClickObjectInform(int instanceID) //오브젝트를 눌렀어.
         {
-            goodPopup.SetActive(true); //좋아요 팝업이 등장
             this.ClickMessageInform = manager.GetEntry(instanceID); // 현재 클릭한 오브젝트의 정보 저장 
+            if (isClickChecked() == true)
+            {
+                goodPopup.transform.GetChild(0).GetChild(0).GetComponent<Text>().text = "♡ CANCEL";
+            }
+            goodPopup.SetActive(true); //좋아요 팝업이 등장      
             // 이제 여기서 클릭된 오브젝트의 Location 객체를 마음껏 사용할 수 있음                
         }
 
@@ -297,13 +301,16 @@ namespace Gps
             if(isClickChecked() == false) //만약에 누른사람이 아니라면 
             {
                 ClickMessageInform.location.isClickUID.Add(this.UID); //추가해, UID를
+                goodPopup.transform.GetChild(0).GetChild(0).GetComponent<Text>().text = "♡ CANCEL";
             }
             else //만약 누른 사람이라면
             {
-                ClickMessageInform.location.isClickUID.Remove(this.UID); // 제거해, UID를             
+                ClickMessageInform.location.isClickUID.Remove(this.UID); // 제거해, UID를
+                goodPopup.transform.GetChild(0).GetChild(0).GetComponent<Text>().text = "♥ CLICK";
             }
             ClickMessageInform.location.likecnt = ClickMessageInform.location.isClickUID.Count;
             UpdateOnClickUID(ClickMessageInform); //클릭한 사람 정보 DB 업데이트
+            ClickMessageInform.instance.transform.GetChild(0).GetChild(0).Find("goodText").GetComponent<Text>().text = Convert.ToString(ClickMessageInform.location.likecnt);
         }
 
         public void ClickCancelButton()
