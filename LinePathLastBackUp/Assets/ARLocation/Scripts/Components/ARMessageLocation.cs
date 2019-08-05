@@ -110,9 +110,10 @@ namespace Gps
                         location.latitude = Convert.ToDouble(item.Child("latitude").Value);
                         location.longitude = Convert.ToDouble(item.Child("longitude").Value);
                         location.uid = Convert.ToString(item.Child("uid").Value);
-                        foreach (var clickuid in item.Child("isClickUID").Children)
+                        location.likecnt = Convert.ToInt32(item.Child("likecnt").Value);
+                        foreach (var clickuid in item.Child("likelist").Children)
                         {
-                            location.isClickUID.Add(Convert.ToString(clickuid.Value));
+                            location.likelist.Add(Convert.ToString(clickuid.Value));
                         }
                         locations.Add(location);
                         AddLocation(location);
@@ -133,7 +134,7 @@ namespace Gps
 
             }
 
-            HandleChildListener();           
+            //HandleChildListener();           
             LoadingPopup.GetComponent<Canvas>().enabled = false;         
            
         }
@@ -175,25 +176,13 @@ namespace Gps
         }
 
 
-        public void writeUpdateMessage(Location location)
+        public void UpdateOnClickUID(ARLocationManagerEntry aRLocationManagerEntry)
         {
+            Location location = aRLocationManagerEntry.location;
             string json = JsonUtility.ToJson(location);
             databaseReference.Child("ARMessages").Child(location.key).SetRawJsonValueAsync(json);
         }
 
-
-        public void UpdateOnClickUID(ARLocationManagerEntry aRLocationManagerEntry)
-        {
-            Location location = aRLocationManagerEntry.location;  
-            foreach (String clickuid in location.isClickUID)
-            {
-                UserInformation userInformation = new UserInformation(clickuid);
-                string json = JsonUtility.ToJson(userInformation);
-                databaseReference.Child("ARMessages").Child(location.key).Child("isClickUID").Child(clickuid).SetRawJsonValueAsync(json);
-            }
-            writeUpdateMessage(location);
-       
-        }
 
 
         private void ARMessageLocation_ValueChanged(object sender, ValueChangedEventArgs e)
@@ -223,7 +212,7 @@ namespace Gps
             });            
         }
 
-
+/*
         void HandleValueChanged(object sender, ValueChangedEventArgs args)
         {
             if (args.DatabaseError != null)
@@ -242,6 +231,8 @@ namespace Gps
                 location.longitude = Convert.ToDouble(item.Child("longitude").Value);          
                 location.likecnt = Convert.ToInt16(item.Child("likecnt").Value);
                 
+                
+                
                 locations.Add(location);
                 AddLocation(location);             
                 cnt++;
@@ -251,7 +242,7 @@ namespace Gps
         public void HandleChildListener() //데이터베이스에 변화(추가,삭제,변경)에 대한 리스너를 구현한 메소드
         {
             databaseReference.Child("ARMessages").ValueChanged += HandleValueChanged;
-        }
+        }*/
 
         public void GetUid() // Android 에서 넘어온 uid를 객체에 저장해주는 메소드
         {
@@ -300,17 +291,18 @@ namespace Gps
         {                      
             if(isClickChecked() == false) //만약에 누른사람이 아니라면 
             {
-                ClickMessageInform.location.isClickUID.Add(this.UID); //추가해, UID를
+                ClickMessageInform.location.likelist.Add(this.UID); //추가해, UID를
                 goodPopup.transform.GetChild(0).GetChild(0).GetComponent<Text>().text = "♡ CANCEL";
             }
             else //만약 누른 사람이라면
             {
-                ClickMessageInform.location.isClickUID.Remove(this.UID); // 제거해, UID를
+                ClickMessageInform.location.likelist.Remove(this.UID); // 제거해, UID를
                 goodPopup.transform.GetChild(0).GetChild(0).GetComponent<Text>().text = "♥ CLICK";
             }
-            ClickMessageInform.location.likecnt = ClickMessageInform.location.isClickUID.Count;
-            UpdateOnClickUID(ClickMessageInform); //클릭한 사람 정보 DB 업데이트
+            ClickMessageInform.location.likecnt = ClickMessageInform.location.likelist.Count;
             ClickMessageInform.instance.transform.GetChild(0).GetChild(0).Find("goodText").GetComponent<Text>().text = Convert.ToString(ClickMessageInform.location.likecnt);
+            UpdateOnClickUID(ClickMessageInform); //클릭한 사람 정보 DB 업데이트
+     
         }
 
         public void ClickCancelButton()
@@ -320,7 +312,7 @@ namespace Gps
 
         public bool isClickChecked()
         {
-            bool isClick = ClickMessageInform.location.isClickUID.Contains(this.UID);
+            bool isClick = ClickMessageInform.location.likelist.Contains(this.UID);
             return isClick;
         }
 
