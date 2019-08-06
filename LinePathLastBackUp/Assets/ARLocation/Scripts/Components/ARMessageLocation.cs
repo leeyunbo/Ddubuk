@@ -72,10 +72,8 @@ namespace Gps
 
         // Use this for initialization
         public void Awake()
-        {
-            
-            //GetUid(); // 현재 유저의 Uid를 가져온 후 저장 
-            this.UID = "0aqhKGhuyxeSVRomlALyxVnyYRx2";
+        {       
+            GetUid(); // 현재 유저의 Uid를 가져온 후 저장 
             goodPopup = GameObject.Find("goodPopup");
             PopupMessage = GameObject.Find("PopupMessage");
             LoadingPopup = GameObject.Find("LoadingPopup");
@@ -212,7 +210,7 @@ namespace Gps
             });            
         }
 
-/*
+       /*
         void HandleValueChanged(object sender, ValueChangedEventArgs args)
         {
             if (args.DatabaseError != null)
