@@ -144,7 +144,7 @@ dd7520b7d4e690e8c593273e7b9fbe80 Assembly-CSharp.dll:TMPro.Examples.TMP_TextEven
 d315c0a9491162437fb254c6682247c8 Assembly-CSharp.dll:.LocationPath
 47930f3b40e24ef5b3b5e3d9ada7097a Assembly-CSharp.dll:TMPro.Examples.Benchmark01
 84a8992044c9d93a95ba9320eeabf58d Assembly-CSharp.dll:.ARLocationMoveAlongPath
-c9861fe3b3f5ceb1476fd88d910ad030 Assembly-CSharp.dll:Gps.ARMessageLocation
+a88c2f68b22e96726318701868736769 Assembly-CSharp.dll:Gps.ARMessageLocation
 0077fc8e4fbae67f80e80ebd534de5a0 Vuforia.UnityExtensions.dll:Vuforia.AnchorBehaviour
 f8b139fcde9fda6214245df246415cc7 Vuforia.UnityExtensions.dll:Vuforia.AnchorInputListenerBehaviour
 0077fc8e4fbae67f80e80ebd534de5a0 Vuforia.UnityExtensions.dll:Vuforia.AnchorStageBehaviour
@@ -391,3 +391,6 @@ cd67f3e1e9ccac6db86c1564cea5a827 Vuforia.UnityExtensions.dll:Vuforia.VuforiaConf
 69167579cf7fcbb2676fc1e675963dcd Vuforia.UnityExtensions.dll:Vuforia.VuMarkBehaviour
 fbbf64dcbe0662e3eda1dec45ea8f895 Vuforia.UnityExtensions.dll:Vuforia.WireframeBehaviour
 71bb6a6b6c8f052f948db64c7dd3ca4f Vuforia.UnityExtensions.dll:Vuforia.WireframeTrackableEventHandler
+8b9f299cdff30848bf2015c4e0d9e0f7 Assembly-CSharp.dll:.PlayerStats
+45cf43722275c3cef3a3e5c2125c8d6a Assembly-CSharp.dll:.HealthBarController
+71bb6a6b6c8f052f948db64c7dd3ca4f Assembly-CSharp.dll:.HealthBarHUDTester

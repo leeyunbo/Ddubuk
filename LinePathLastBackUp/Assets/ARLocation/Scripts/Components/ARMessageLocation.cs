@@ -25,6 +25,10 @@ namespace Gps
         /// <summary>
         /// If true, the altitude will be computed as relative to the device level.
         /// </summary>
+        /// 
+        public Sprite like;
+        public Sprite dislike;
+
         [Tooltip("If true, the altitude will be computed as relative to the device level.")]
         public bool isHeightRelative = true;
 
@@ -44,7 +48,6 @@ namespace Gps
 
         GameObject PopupMessage;
         GameObject LoadingPopup;
-        GameObject goodPopup;
 
         String UID;
         ARLocationManagerEntry ClickMessageInform;
@@ -74,13 +77,13 @@ namespace Gps
         public void Awake()
         {       
             GetUid(); // 현재 유저의 Uid를 가져온 후 저장 
-            goodPopup = GameObject.Find("goodPopup");
+   
             PopupMessage = GameObject.Find("PopupMessage");
             LoadingPopup = GameObject.Find("LoadingPopup");
             manager = ARLocationManager.Instance;
             PopupMessage.SetActive(false);
-            goodPopup.SetActive(false);
-   
+     
+        
 
             
             gps = GameObject.Find("GpsMachine").GetComponent<UsingGps>();
@@ -193,6 +196,10 @@ namespace Gps
             GameObject Prefab = thePrefab;           
             Prefab.GetComponentInChildren<Text>().text = location.label;
             Prefab.transform.GetChild(0).GetChild(0).Find("goodText").GetComponent<Text>().text = Convert.ToString(location.likecnt);
+            if (isClickChecked(location) == true)
+            {
+                Prefab.transform.GetChild(0).GetChild(0).Find("heart").GetComponent<Text>().text = "<color=#ff0000>" + "♥" + "</color>"; //하트 빨강으로 변경 
+            }
             //Prefab.transform.GetChild(0).Find("goodText").GetComponent<Text>().text = Convert.ToString(location.isClickUID.Count);
 
 
@@ -246,6 +253,7 @@ namespace Gps
         {
             this.UID = PlayerPrefs.GetString("Uid");
             UserInformation = new UserInformation(this.UID); //유저 정보 저장 
+           
         }
 
 
@@ -277,25 +285,21 @@ namespace Gps
         public void getClickObjectInform(int instanceID) //오브젝트를 눌렀어.
         {
             this.ClickMessageInform = manager.GetEntry(instanceID); // 현재 클릭한 오브젝트의 정보 저장 
-            if (isClickChecked() == true)
-            {
-                goodPopup.transform.GetChild(0).GetChild(0).GetComponent<Text>().text = "♡ CANCEL";
-            }
-            goodPopup.SetActive(true); //좋아요 팝업이 등장      
+            ClickGoodButton();
             // 이제 여기서 클릭된 오브젝트의 Location 객체를 마음껏 사용할 수 있음                
         }
 
         public void ClickGoodButton() //좋아요 버튼을 사용자가 눌렀어.
         {                      
-            if(isClickChecked() == false) //만약에 누른사람이 아니라면 
+            if(isClickChecked(ClickMessageInform.location) == false) //만약에 누른사람이 아니라면 
             {
                 ClickMessageInform.location.likelist.Add(this.UID); //추가해, UID를
-                goodPopup.transform.GetChild(0).GetChild(0).GetComponent<Text>().text = "♡ CANCEL";
+                ClickMessageInform.instance.transform.GetChild(0).GetChild(0).Find("heart").GetComponent<Text>().text = "<color=#ff0000>" + "♥" + "</color>"; //빨강하트
             }
             else //만약 누른 사람이라면
             {
                 ClickMessageInform.location.likelist.Remove(this.UID); // 제거해, UID를
-                goodPopup.transform.GetChild(0).GetChild(0).GetComponent<Text>().text = "♥ CLICK";
+                ClickMessageInform.instance.transform.GetChild(0).GetChild(0).Find("heart").GetComponent<Text>().text = "<color=#b0b0b0>" + "♥" + "</color>"; //회색 하트 
             }
             ClickMessageInform.location.likecnt = ClickMessageInform.location.likelist.Count;
             ClickMessageInform.instance.transform.GetChild(0).GetChild(0).Find("goodText").GetComponent<Text>().text = Convert.ToString(ClickMessageInform.location.likecnt);
@@ -303,14 +307,11 @@ namespace Gps
      
         }
 
-        public void ClickCancelButton()
-        {
-            goodPopup.SetActive(false);
-        }
 
-        public bool isClickChecked()
+
+        public bool isClickChecked(Location location)
         {
-            bool isClick = ClickMessageInform.location.likelist.Contains(this.UID);
+            bool isClick = location.likelist.Contains(this.UID);
             return isClick;
         }
 
