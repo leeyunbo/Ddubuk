@@ -40,7 +40,7 @@ AR POI : Naver api를 이용해 주변 정보를 불러와 그 좌표마다 오�
 AR 메시지 : 파이어베이스에 다양한 사용자들이 배치시킨 메시지들을 저장시킴 
 
 
-Haversine formula
+Haversine formula*
 -------------------------------------
 Haversine formula란 구에서 두가지 점을 찍었을 때 거리를 구할 수 있는 알고리즘  
 
