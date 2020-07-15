@@ -54,3 +54,8 @@ Youtube
 -------------------------------------
 https://www.youtube.com/watch?v=E1drjy37nwc&t=4s
 
+Image
+-------------------------------------
+![DDubuk](https://user-images.githubusercontent.com/44944031/87563447-2e5a1280-c6fa-11ea-9b57-a4d0c108d616.png)
+
+
