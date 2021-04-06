@@ -44,19 +44,18 @@ The haversine formula determines the great-circle distance between two points on
 
 Haversine formula*
 -------------------------------------
-1. Haversine formula란 구에서 두가지 점을 찍었을 때 거리를 구할 수 있는 알고리즘  
-2. 100%의 정확도를 보여주진 않지만, Haversine formula를 이용해 충분히 구현할 수 있다고 판단해 선택
+1. `Haversine formula`란 구에서 두가지 점을 찍었을 때 거리를 구할 수 있는 알고리즘  
+2. 100%의 정확도를 보여주진 않지만, `Haversine formula`를 이용해 충분히 구현할 수 있다고 판단해 선택
 
 <br/>
 <br/>
 
-안드로이드 SNS 앱 + AR 모듈 
--------------------------------------
-https://github.com/dudcheol/LittletigersInit
 
-Youtube 
+참조
 -------------------------------------
-https://www.youtube.com/watch?v=E1drjy37nwc&t=4s
+[안드로이드 SNS 앱 + AR 모듈](https://github.com/dudcheol/LittletigersInit) <br/>
+[유튜브](https://www.youtube.com/watch?v=E1drjy37nwc&t=4s) 
+
 
 Image
 -------------------------------------
