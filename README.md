@@ -14,8 +14,9 @@ representative algorithm is the haversine algorithm.
 
 The haversine formula determines the great-circle distance between two points on a sphere given their longitudes and latitudes.
 ```
+<br/>
+<br/>
 
--------------------------------------
 기능
 -------------------------------------
 1. AR Message : 자기가 원하는 위치에 텍스트를 담은 말풍선을 띄울 수 있음
@@ -32,13 +33,13 @@ The haversine formula determines the great-circle distance between two points on
 
 3. 위도와 경도를 가지는 포인트 사이의 거리를 측정하기 위하여 `Haversine formula`를 이용함 
 
-4. DB 및 서버 : Firebase
+4. DB 및 서버 : `Firebase`
 
-5. AR Navigation : Tmap api를 이용해 경로가 꺾이는 곳마다 좌표를 불러와 그 곳에 오브젝트를 배치 시킨 후, `Line Rederer`를 이용해 선으로 이어줌
+5. AR Navigation : `Tmap api`를 이용해 경로가 꺾이는 곳마다 좌표를 불러와 그 곳에 게임 오브젝트를 배치 시킨 후, `Line Rederer`를 이용해 선으로 이어줌
 
-6. AR POI : `Naver api`를 이용해 주변 정보를 불러와 그 좌표마다 오브젝트를 배치 시키고, 거리를 계산해 거리도 사용자에게 보여줌 
+6. AR POI : `Naver api`를 이용해 주변 장소들을 불러와 그 좌표마다 오브젝트를 배치 시켜 사용자에게 장소의 방향 정보를 알려줌
 
-7. AR Message : `FireBase`에 다양한 사용자들이 배치시킨 메시지들의 정보를 저장시킴
+7. AR Message : `FireBase`에 다양한 사용자들이 배치시킨 메시지들의 위치 정보와 내용을 저장시킨 후 사용자들에게 보여줌
 
 
 Haversine formula*
