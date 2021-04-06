@@ -50,7 +50,7 @@ Firebase
 -------------------------------------
 Realtime DB를 이용하여 다양한 커뮤니케이션 구현 
 
-통합본 
+안드로이드 SNS 앱 + AR 모듈 
 -------------------------------------
 https://github.com/dudcheol/LittletigersInit
 
